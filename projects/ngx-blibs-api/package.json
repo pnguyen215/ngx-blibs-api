@@ -1,0 +1,14 @@
+{
+  "name": "ngx-blibs-api",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.0",
+    "@angular/core": "^8.2.0",
+    "@angular/compiler": "^8.2.14",
+    "@angular/animations": "^8.2.14",
+    "@angular/forms": "^8.2.14",
+    "@angular/platform-browser": "^8.2.14",
+    "@angular/platform-browser-dynamic": "^8.2.14"
+  },
+  "dependencies": {}
+}
