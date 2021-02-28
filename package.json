@@ -24,7 +24,6 @@
     "@angular/platform-browser": "^8.2.14",
     "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
-    "angular-sl": "file:libs/angular-sl-0.0.1.tgz",
     "ngx-toastr": "^13.2.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.14.1",
