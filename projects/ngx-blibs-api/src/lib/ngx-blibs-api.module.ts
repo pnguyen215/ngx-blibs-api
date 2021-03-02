@@ -8,6 +8,7 @@ import { BlibsAlertComponent } from './blibs_unit/blibs-alert/blibs-alert.compon
 import { BlibsAlertService } from './blibs/blibs-alert.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BlibsStorageService } from './blibs/blibs-storage.service';
 @NgModule({
   declarations: [
     NgxBlibsApiComponent,
@@ -24,6 +25,7 @@ import { BrowserModule } from '@angular/platform-browser';
   ],
   providers: [
     BlibsAlertService,
+    BlibsStorageService,
     {
       provide: BlibsHttpBaseService,
       useClass: BlibsHttpBaseImplService

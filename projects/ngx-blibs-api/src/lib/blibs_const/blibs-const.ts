@@ -7,5 +7,6 @@ export const Storage = {
   APP: 'sivaos.ap',
   ROLES: 'sivaos.id',
   EXPIRATION: 'sivaos.session.expiry',
-  DATA: 'sivaos.data'
+  DATA: 'sivaos.data',
+  PRIVILEGES: 'sivaos.permission'
 };

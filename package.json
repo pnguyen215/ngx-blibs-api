@@ -1,5 +1,5 @@
 {
-  "name": "create-lib",
+  "name": "ngx-blibs",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-my-lib": "ng build my-lib",
     "build-angular-sl": "ng build angularSL",
     "build-lib": "ng build ngx-blibs-api",
     "npm-pack": "cd dist/blibs-api && npm pack",
