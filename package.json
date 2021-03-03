@@ -11,7 +11,8 @@
     "build-angular-sl": "ng build angularSL",
     "build-lib": "ng build ngx-blibs-api",
     "npm-pack": "cd dist/blibs-api && npm pack",
-    "package": "npm run build-lib && npm run npm-pack"
+    "package": "npm run build-lib && npm run npm-pack",
+    "build:lib": "ng-packagr -p projects/ngx-blibs-api/package.json"
   },
   "private": true,
   "dependencies": {

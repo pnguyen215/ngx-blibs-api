@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { FilesRequest } from '../../blibs_union/files-request.model';
-import { AuthenticationService } from '../authentication.service';
+import { BlibsAuthenticationService } from '../blibs-authentication.service';
+import { BlibsToastService } from '../blibs-toast.service';
 
 @Injectable()
 export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseImplService {
@@ -14,7 +15,8 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
 
     constructor(
         private http: HttpClient,
-        private authenticationService: AuthenticationService,
+        private authenticationService: BlibsAuthenticationService,
+        private blibsToastService: BlibsToastService
     ) { }
 
 
@@ -52,7 +54,8 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
     setUpEnvironment(env: string): void {
         this.APIEndpoint = env;
         if (this.APIEndpoint === null || this.APIEndpoint === undefined || this.APIEndpoint === '') {
-            window.alert(`Can't connect to API endpoint server`);
+            this.blibsToastService.update(`[ERROR] Can't connect to API endpoint server`);
+            this.blibsToastService.show();
         }
     }
 

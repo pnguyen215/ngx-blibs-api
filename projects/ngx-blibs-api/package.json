@@ -1,6 +1,6 @@
 {
   "name": "ngx-blibs-api",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "peerDependencies": {
     "@angular/common": "^8.2.0",
     "@angular/core": "^8.2.0",
@@ -10,5 +10,12 @@
     "@angular/platform-browser": "^8.2.14",
     "@angular/platform-browser-dynamic": "^8.2.14"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "ngPackage": {
+    "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "../../dist/ngx-blibs-api",
+    "lib": {
+      "entryFile": "src/public-api.ts"
+    }
+  }
 }

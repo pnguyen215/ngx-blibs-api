@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from '../authentication.service';
+import { BlibsAuthenticationService } from '../blibs-authentication.service';
 import { BlibsStorageService } from '../blibs-storage.service';
 import * as CONST from '../../blibs_const/blibs-const';
 @Injectable()
-export class AuthenticationActionService implements AuthenticationService {
+export class BlibsAuthenticationImplService implements BlibsAuthenticationService {
 
   constructor(
     private blibsStorageService: BlibsStorageService

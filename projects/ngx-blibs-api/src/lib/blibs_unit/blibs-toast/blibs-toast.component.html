@@ -1,0 +1,4 @@
+<div id="toast" *ngIf="blibsToastService.visible | async">
+    {{ blibsToastService.message | async }}<br>
+    <a id="hide" (click)="blibsToastService.hide()">Close</a>
+</div>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export abstract class AuthenticationService {
+export abstract class BlibsAuthenticationService {
 
   abstract isAuthenticated(): boolean;
 
