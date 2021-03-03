@@ -1,6 +1,22 @@
 {
   "name": "ngx-blibs-api",
   "version": "1.0.1",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pnguyen215/Ngx-Blibs-Api.git"
+  },
+  "description": "ngx-blibs-api support for connect to api platform",
+  "keywords": [
+    "api",
+    "angular api",
+    "request",
+    "lib"
+  ],
+  "author": {
+    "name": "PhuocNguyen",
+    "email": "nguyenhuuphuocit97@gmail.com"
+  },
   "peerDependencies": {
     "@angular/common": "^8.2.0",
     "@angular/core": "^8.2.0",
