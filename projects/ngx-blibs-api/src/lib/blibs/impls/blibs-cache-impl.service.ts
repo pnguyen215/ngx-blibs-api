@@ -7,14 +7,19 @@ import * as CONST from '../../blibs_const/blibs-const';
 @Injectable()
 export class BlibsCacheImplService implements BlibsCacheService {
 
-  protected maxAge = 30000;
+  private maxAge = 30000; // value default
   cache = new Map();
-  expired: string;
 
   constructor(
     private blibsAuthenticationService: BlibsAuthenticationService,
     private blibsStorageService: BlibsStorageService
   ) { }
+
+
+  setMaxAge(value: number): void {
+    this.maxAge = value;
+    this.blibsStorageService.set(CONST.Storage.MAX_AGE, this.maxAge);
+  }
 
   get(req: HttpRequest<any>): HttpResponse<any> | undefined {
     const url = req.urlWithParams;
@@ -26,8 +31,8 @@ export class BlibsCacheImplService implements BlibsCacheService {
 
     if (this.blibsAuthenticationService.isBlibsRoleAvaliable(13) === true) {
       const isExpired = cached.lastRead < (Date.now() - this.maxAge);
-      this.expired = isExpired ? 'expired ' : '';
-      console.log(`log for cache ===> ${url}: ${this.expired}`);
+      const expired = isExpired ? 'expired ' : '';
+      console.log(`[DEBUG] log for cache ===> ${url}: ${expired}`);
     }
 
     return cached.response;
@@ -37,18 +42,16 @@ export class BlibsCacheImplService implements BlibsCacheService {
     const url = req.url;
     const entry = { url, response, lastRead: Date.now() };
     this.cache.set(url, entry);
-    const expired = Date.now() - this.maxAge;
+    // tslint:disable-next-line: no-unused-expression
+    let expired = 0;
+    if (this.blibsStorageService.get(CONST.Storage.MAX_AGE) != null && this.blibsStorageService.get(CONST.Storage.MAX_AGE) !== undefined) {
+      expired = Date.now() - this.blibsStorageService.get(CONST.Storage.MAX_AGE);
+    } else {
+      expired = Date.now() - this.maxAge;
+    }
     this.cache.forEach(expiredEntry => {
       if (expiredEntry.lastRead < expired) {
         this.cache.delete(expiredEntry.url);
-        const isRemoved: boolean =
-          this.blibsStorageService.remove(CONST.Storage.TOKEN)
-          && this.blibsStorageService.remove(CONST.Storage.USERNAME)
-          && this.blibsStorageService.remove(CONST.Storage.APP)
-          && this.blibsStorageService.remove(CONST.Storage.ROLES)
-          && this.blibsStorageService.remove(CONST.Storage.USER_ID)
-          && this.blibsStorageService.remove(CONST.Storage.PRIVILEGES)
-          ;
       }
     });
   }

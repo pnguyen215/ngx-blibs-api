@@ -8,5 +8,6 @@ export const Storage = {
   ROLES: 'sivaos.id',
   EXPIRATION: 'sivaos.session.expiry',
   DATA: 'sivaos.data',
-  PRIVILEGES: 'sivaos.permission'
+  PRIVILEGES: 'sivaos.permission',
+  MAX_AGE: 'sivaos.max-age'
 };
