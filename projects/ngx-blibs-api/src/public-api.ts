@@ -5,6 +5,7 @@
 /* components */
 export * from './lib/blibs_unit/blibs-alert/blibs-alert.component';
 export * from './lib/blibs_unit/blibs-toast/blibs-toast.component';
+export * from './lib/blibs_unit/blibs-log-req/blibs-log-req.component';
 export * from './lib/ngx-blibs-api.component';
 
 /* modules */
@@ -30,6 +31,7 @@ export * from './lib/blibs/blibs-authentication.service';
 export * from './lib/blibs/blibs-toast.service';
 export * from './lib/blibs/blibs-cache.service';
 export * from './lib/blibs/blibs-error.service';
+export * from './lib/blibs/blibs-log-req.service';
 
 /* impls */
 export * from './lib/blibs/impls/blibs-authentication-impl.service';

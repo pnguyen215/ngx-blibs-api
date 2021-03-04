@@ -18,17 +18,22 @@ import { BlibsToastService } from './blibs/blibs-toast.service';
 import { BlibsCacheService } from './blibs/blibs-cache.service';
 import { BlibsCacheImplService } from './blibs/impls/blibs-cache-impl.service';
 import { BlibsErrorService } from './blibs/blibs-error.service';
+import { BlibsLogReqService } from './blibs/blibs-log-req.service';
+import { BlibsLogReqComponent } from './blibs_unit/blibs-log-req/blibs-log-req.component';
 @NgModule({
   declarations: [
     NgxBlibsApiComponent,
     BlibsAlertComponent,
-    BlibsToastComponent
+    BlibsToastComponent,
+    BlibsLogReqComponent
   ],
   exports: [
     NgxBlibsApiComponent,
     BlibsAlertComponent,
-    BlibsToastComponent
+    BlibsToastComponent,
+    BlibsLogReqComponent
   ],
+  entryComponents: [BlibsLogReqComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -47,6 +52,7 @@ export class NgxBlibsApiModule {
         BlibsStorageService,
         BlibsToastService,
         BlibsErrorService,
+        BlibsLogReqService,
         {
           provide: BlibsHttpBaseService,
           useClass: BlibsHttpBaseImplService

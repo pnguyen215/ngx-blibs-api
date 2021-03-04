@@ -2,7 +2,6 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } fr
 import { BlibsCacheService } from '../blibs-cache.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import 'rxjs/add/observable/of';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
