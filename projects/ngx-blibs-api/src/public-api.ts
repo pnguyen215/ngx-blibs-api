@@ -29,6 +29,7 @@ export * from './lib/blibs/blibs-storage.service';
 export * from './lib/blibs/blibs-authentication.service';
 export * from './lib/blibs/blibs-toast.service';
 export * from './lib/blibs/blibs-cache.service';
+export * from './lib/blibs/blibs-error.service';
 
 /* impls */
 export * from './lib/blibs/impls/blibs-authentication-impl.service';

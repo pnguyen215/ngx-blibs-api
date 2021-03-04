@@ -17,6 +17,7 @@ import { BlibsAuthenticationImplService } from './blibs/impls/blibs-authenticati
 import { BlibsToastService } from './blibs/blibs-toast.service';
 import { BlibsCacheService } from './blibs/blibs-cache.service';
 import { BlibsCacheImplService } from './blibs/impls/blibs-cache-impl.service';
+import { BlibsErrorService } from './blibs/blibs-error.service';
 @NgModule({
   declarations: [
     NgxBlibsApiComponent,
@@ -45,6 +46,7 @@ export class NgxBlibsApiModule {
         BlibsAlertService,
         BlibsStorageService,
         BlibsToastService,
+        BlibsErrorService,
         {
           provide: BlibsHttpBaseService,
           useClass: BlibsHttpBaseImplService
