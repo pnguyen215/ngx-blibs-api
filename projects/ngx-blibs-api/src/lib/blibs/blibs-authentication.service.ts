@@ -1,25 +1,74 @@
 import { Injectable } from '@angular/core';
-
+import * as CONST from '../blibs_const/blibs-const';
+import { BlibsStorageService } from './blibs-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export abstract class BlibsAuthenticationService {
+export class BlibsAuthenticationService {
+  constructor(
+    private blibsStorageService: BlibsStorageService
+  ) { }
 
-  abstract isAuthenticated(): boolean;
 
-  abstract getBlibsToken(): any;
+  isAuthenticated(): boolean {
+    if (this.getBlibsToken() !== null || this.getBlibsToken() !== '') {
+      return true;
+    }
+    return false;
+  }
 
-  abstract getBlibsRoles(): any;
+  getBlibsToken(): any {
+    return this.blibsStorageService.get((CONST.Storage.TOKEN));
+  }
 
-  abstract isBlibsRoleAvaliable(value: any): boolean;
+  getBlibsRoles(): any {
+    return this.blibsStorageService.get((CONST.Storage.ROLES));
+  }
 
-  abstract isBlibsLogoutGlobal(): boolean;
+  isBlibsRoleAvaliable(value: any): boolean {
+    const roles = this.getBlibsRoles();
+    if (roles === null || roles === undefined) {
+      return false;
+    }
+    return roles.includes(value);
+  }
 
-  abstract getUserId(): any;
+  isBlibsLogoutGlobal(): boolean {
 
-  abstract getUserPrivileges(): any;
+    const isRemoved: boolean =
+      this.blibsStorageService.remove(CONST.Storage.TOKEN)
+      && this.blibsStorageService.remove(CONST.Storage.EXPIRATION)
+      && this.blibsStorageService.remove(CONST.Storage.USERNAME)
+      && this.blibsStorageService.remove(CONST.Storage.APP)
+      && this.blibsStorageService.remove(CONST.Storage.ROLES)
+      && this.blibsStorageService.remove(CONST.Storage.USER_ID)
+      && this.blibsStorageService.remove(CONST.Storage.PRIVILEGES)
+      ;
 
-  abstract isTokenExpired(): boolean;
+    if (isRemoved) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  abstract isManualTokenExpired(value: number): boolean;
+  getUserId(): any {
+    return this.blibsStorageService.get(CONST.Storage.USER_ID);
+  }
+
+  getUserPrivileges(): any {
+    return this.blibsStorageService.get(CONST.Storage.PRIVILEGES);
+  }
+
+  isTokenExpired(): boolean {
+    const expiredIn = this.blibsStorageService.get(CONST.Storage.EXPIRATION);
+    // tslint:disable-next-line: new-parens
+    return (Math.floor((new Date).getTime() / 1000)) >= expiredIn;
+  }
+
+  isManualTokenExpired(value: number): boolean {
+    const expiredIn = this.blibsStorageService.get(CONST.Storage.EXPIRATION);
+    // tslint:disable-next-line: new-parens
+    return (Math.floor((new Date).getTime() / 1000)) >= value;
+  }
 }

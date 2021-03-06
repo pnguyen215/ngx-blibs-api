@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 import { BlibsToastComponent } from './blibs_unit/blibs-toast/blibs-toast.component';
 import { NgxBlibsApiService } from './ngx-blibs-api.service';
 import { BlibsAuthenticationService } from './blibs/blibs-authentication.service';
-import { BlibsAuthenticationImplService } from './blibs/impls/blibs-authentication-impl.service';
 import { BlibsToastService } from './blibs/blibs-toast.service';
 import { BlibsCacheService } from './blibs/blibs-cache.service';
 import { BlibsCacheImplService } from './blibs/impls/blibs-cache-impl.service';
@@ -53,6 +52,7 @@ export class NgxBlibsApiModule {
         BlibsToastService,
         BlibsErrorService,
         BlibsLogReqService,
+        BlibsAuthenticationService,
         {
           provide: BlibsHttpBaseService,
           useClass: BlibsHttpBaseImplService
@@ -60,10 +60,6 @@ export class NgxBlibsApiModule {
         {
           provide: BlibsDevToastrService,
           useClass: BlibsDevToastrImplService
-        },
-        {
-          provide: BlibsAuthenticationService,
-          useClass: BlibsAuthenticationImplService
         },
         {
           provide: BlibsCacheService,

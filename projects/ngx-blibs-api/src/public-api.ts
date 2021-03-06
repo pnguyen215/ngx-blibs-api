@@ -34,7 +34,6 @@ export * from './lib/blibs/blibs-error.service';
 export * from './lib/blibs/blibs-log-req.service';
 
 /* impls */
-export * from './lib/blibs/impls/blibs-authentication-impl.service';
 export * from './lib/blibs/impls/blibs-dev-toastr-impl.service';
 // tslint:disable-next-line: eofline
 export * from './lib/blibs/impls/blibs-http-base-impl.service';
@@ -42,11 +41,6 @@ export * from './lib/blibs/impls/blibs-cache-impl.service';
 
 // interceptors
 export * from './lib/blibs/interceptors/index';
-
-
-// guards
-// tslint:disable-next-line: eofline
-export * from './lib/blibs_guard/blibs-authorization.guard';
 
 
 // utils
