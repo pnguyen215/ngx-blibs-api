@@ -11,13 +11,14 @@ export class BlibsAuthenticationService {
 
 
   isAuthenticated(): boolean {
-    if (this.getBlibsToken() !== null || this.getBlibsToken() !== '') {
-      return true;
+    if (this.getBlibsToken() === null ||
+      this.getBlibsToken() === '') {
+      return false;
     }
-    return false;
+    return true;
   }
 
-  getBlibsToken(): any {
+  getBlibsToken(): string {
     return this.blibsStorageService.get((CONST.Storage.TOKEN));
   }
 
