@@ -42,3 +42,8 @@ export * from './lib/blibs/impls/blibs-cache-impl.service';
 
 // interceptors
 export * from './lib/blibs/interceptors/index';
+
+
+// guards
+// tslint:disable-next-line: eofline
+export * from './lib/blibs_guard/blibs-authorization.guard';

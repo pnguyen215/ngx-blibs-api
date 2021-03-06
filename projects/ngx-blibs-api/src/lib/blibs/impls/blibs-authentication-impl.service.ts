@@ -37,6 +37,7 @@ export class BlibsAuthenticationImplService implements BlibsAuthenticationServic
 
     const isRemoved: boolean =
       this.blibsStorageService.remove(CONST.Storage.TOKEN)
+      && this.blibsStorageService.remove(CONST.Storage.EXPIRATION)
       && this.blibsStorageService.remove(CONST.Storage.USERNAME)
       && this.blibsStorageService.remove(CONST.Storage.APP)
       && this.blibsStorageService.remove(CONST.Storage.ROLES)
@@ -57,5 +58,17 @@ export class BlibsAuthenticationImplService implements BlibsAuthenticationServic
 
   getUserPrivileges(): any {
     return this.blibsStorageService.get(CONST.Storage.PRIVILEGES);
+  }
+
+  isTokenExpired(): boolean {
+    const expiredIn = this.blibsStorageService.get(CONST.Storage.EXPIRATION);
+    // tslint:disable-next-line: new-parens
+    return (Math.floor((new Date).getTime() / 1000)) >= expiredIn;
+  }
+
+  isManualTokenExpired(value: number): boolean {
+    const expiredIn = this.blibsStorageService.get(CONST.Storage.EXPIRATION);
+    // tslint:disable-next-line: new-parens
+    return (Math.floor((new Date).getTime() / 1000)) >= value;
   }
 }

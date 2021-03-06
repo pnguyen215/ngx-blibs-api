@@ -18,4 +18,8 @@ export abstract class BlibsAuthenticationService {
   abstract getUserId(): any;
 
   abstract getUserPrivileges(): any;
+
+  abstract isTokenExpired(): boolean;
+
+  abstract isManualTokenExpired(value: number): boolean;
 }

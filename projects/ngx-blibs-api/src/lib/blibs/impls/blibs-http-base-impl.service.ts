@@ -191,7 +191,7 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
     logWritter(data: any): void {
         window.alert(`${JSON.stringify(data)}`);
         console.log(`${JSON.stringify(data)}`);
-        return;
+        // return;
     }
 
     // downloade file includes: pdf, excel, json, images
