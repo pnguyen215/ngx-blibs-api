@@ -19,10 +19,19 @@ export class BlibsAuthorizationGuard implements CanActivate, CanActivateChild {
     const isAuthenticated = this.blibsAuthService.isAuthenticated();
     const isExpired = this.blibsAuthService.isTokenExpired();
     if (!isAuthenticated || !isExpired) {
+      /*
       if (isDevMode()) {
-        this.router.navigateByUrl(`${CONST.Params.URL_DEV}`);
+        this.router.navigate([`${CONST.Params.URL_DEV}`]);
       } else {
-        this.router.navigateByUrl(`${CONST.Params.URL_PROD}`);
+        this.router.navigate([`${CONST.Params.URL_PROD}`]);
+      }
+      */
+      if (isDevMode()) {
+        // this.router.navigate([`${CONST.Params.URL_DEV}`]);
+        window.location.href = `${CONST.Params.URL_DEV}`;
+      } else {
+        // this.router.navigate([`${CONST.Params.URL_PROD}`]);
+        window.location.href = `${CONST.Params.URL_PROD}`;
       }
     }
     return isAuthenticated;
