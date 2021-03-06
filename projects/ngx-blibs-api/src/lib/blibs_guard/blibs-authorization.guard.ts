@@ -18,7 +18,7 @@ export class BlibsAuthorizationGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isAuthenticated = this.blibsAuthService.isAuthenticated();
     const isExpired = this.blibsAuthService.isTokenExpired();
-    if (!isAuthenticated || !isExpired) {
+    if (!isAuthenticated || isExpired) {
       /*
       if (isDevMode()) {
         this.router.navigate([`${CONST.Params.URL_DEV}`]);
@@ -26,19 +26,29 @@ export class BlibsAuthorizationGuard implements CanActivate, CanActivateChild {
         this.router.navigate([`${CONST.Params.URL_PROD}`]);
       }
       */
+
+      /*
       if (isDevMode()) {
         // this.router.navigate([`${CONST.Params.URL_DEV}`]);
-        window.location.href = `${CONST.Params.URL_DEV}`;
+        // window.location.href = `${CONST.Params.URL_DEV}`;
+        this.router.navigate(['/auth/sign_in'], { queryParams: { returnUrl: state.url } });
+        return false;
       } else {
         // this.router.navigate([`${CONST.Params.URL_PROD}`]);
-        window.location.href = `${CONST.Params.URL_PROD}`;
+        // window.location.href = `${CONST.Params.URL_PROD}`;
+        this.router.navigate(['/auth/sign_in'], { queryParams: { returnUrl: state.url } });
+        return false;
       }
+      */
+
+      this.router.navigate(['/auth/sign_in'], { queryParams: { returnUrl: state.url } });
+      return false;
     }
-    return isAuthenticated;
+    return true;
   }
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
+    return this.canActivate(next, state);
   }
 }
