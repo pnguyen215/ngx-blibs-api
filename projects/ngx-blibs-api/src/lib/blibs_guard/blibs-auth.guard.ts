@@ -19,7 +19,7 @@ export class BlibsAuthGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     this.isAuthenticated = this.blibsAuthenticationService.isAuthenticated();
     this.isExpired = this.blibsAuthenticationService.isTokenExpired();
-    if (this.isAuthenticated && !this.isExpired) {
+    if (this.isAuthenticated || !this.isExpired) {
       return true;
     }
     this.router.navigate(['/auth/sign_in'], { queryParams: { returnUrl: state.url } });

@@ -113,7 +113,6 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
                 this.blibsErrorService.collectFailedRequest(authenticationRequest);
                 return throwError(error);
             }));
-
     }
 
     // Firstly, run this function! To connect api endpoint!
