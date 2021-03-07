@@ -43,5 +43,8 @@ export * from './lib/blibs/impls/blibs-cache-impl.service';
 export * from './lib/blibs/interceptors/index';
 
 
+// guard 
+export * from './lib/blibs_guard/blibs-auth.guard';
+
 // utils
 // export * from './lib/blibs_utils/blibs-validator.utils';

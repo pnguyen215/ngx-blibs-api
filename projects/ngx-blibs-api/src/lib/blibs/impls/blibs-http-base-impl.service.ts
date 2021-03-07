@@ -59,7 +59,7 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
             authenticationRequest = request.clone(
                 { headers: request.headers.set(this.HEADER_REQ, this.TOKEN_TYPE_REQ + this.authenticationService.getBlibsToken()) });
         }
-        return next.handle(authenticationRequest);
+        // return next.handle(authenticationRequest);
 
         /*
         return next.handle(authenticationRequest).do((event: HttpEvent<any>) => {
@@ -95,6 +95,25 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
                 return throwError(error);
             }));
         */
+        return next.handle(authenticationRequest).pipe(
+            map((event: HttpEvent<any>) => {
+                if (event instanceof HttpResponse) {
+                    // console.log('event--->', event);
+                }
+                return event;
+            }),
+            catchError((error: HttpErrorResponse) => {
+                let data = {};
+                data = {
+                    reason: error && error.error && error.error.reason ? error.error.reason : '',
+                    status: error.status
+                };
+                this.blibsToastService.update(`${JSON.stringify(data)}`);
+                this.blibsToastService.show();
+                this.blibsErrorService.collectFailedRequest(authenticationRequest);
+                return throwError(error);
+            }));
+
     }
 
     // Firstly, run this function! To connect api endpoint!
