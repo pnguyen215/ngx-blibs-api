@@ -20,6 +20,14 @@ export * from './lib/blibs_const/blibs-const';
 export * from './lib/blibs_union/alert-response.model';
 export * from './lib/blibs_union/esgactor-response.model';
 export * from './lib/blibs_union/files-request.model';
+export * from './lib/blibs_union/address-response.model';
+export * from './lib/blibs_union/auth-response.model';
+export * from './lib/blibs_union/header-response.model';
+export * from './lib/blibs_union/pre-user-response.model';
+export * from './lib/blibs_union/privileges-response.model';
+export * from './lib/blibs_union/social-networks-response.model';
+export * from './lib/blibs_union/user-privileges-response.model';
+export * from './lib/blibs_union/user-response.model';
 
 /* service */
 export * from './lib/ngx-blibs-api.service'; // base root service
@@ -48,3 +56,10 @@ export * from './lib/blibs_guard/blibs-auth.guard';
 
 // utils
 // export * from './lib/blibs_utils/blibs-validator.utils';
+
+
+/* endpoint */
+export * from './lib/blibs-endpoint/user-buzz-endpoint.model';
+export * from './lib/blibs-endpoint/user-buzz-routes.module';
+
+

@@ -9,7 +9,7 @@ export class ESGActorResponse {
   archived: boolean;
   description: string;
 
-  constructor(
+  setESGActorResponse(
     id: number,
     createdTime: Date,
     createdBy: number,
