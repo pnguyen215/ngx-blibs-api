@@ -31,8 +31,8 @@ export class BlibsAuthenticationService implements OnDestroy {
     this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
     // tslint:disable-next-line: deprecation
-    const subscr = this.getUserByToken().subscribe();
-    this.unsubscribe.push(subscr);
+    const subscribe = this.getUserByToken().subscribe();
+    this.unsubscribe.push(subscribe);
   }
 
   get currentUserValue(): UserResponse {

@@ -59,7 +59,7 @@ export * from './lib/blibs_guard/blibs-auth.guard';
 
 
 /* endpoint */
-export * from './lib/blibs-endpoint/user-buzz-endpoint.model';
-export * from './lib/blibs-endpoint/user-buzz-routes.module';
+// export * from './lib/blibs-endpoint/user-buzz-endpoint.model';
+// export * from './lib/blibs-endpoint/user-buzz-routes.module';
 
 
