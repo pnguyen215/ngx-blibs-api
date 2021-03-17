@@ -15,10 +15,11 @@ import { retry, catchError, map } from 'rxjs/operators';
 import { FilesRequest } from '../../blibs_union/files-request.model';
 import { BlibsAuthenticationService } from '../blibs-authentication.service';
 import { BlibsErrorService } from '../blibs-error.service';
+import { BlibsHttpBaseService } from '../blibs-http-base.service';
 import { BlibsToastService } from '../blibs-toast.service';
 
 @Injectable()
-export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseImplService {
+export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseService {
     protected HEADER_REQ = 'Authorization';
     protected TOKEN_TYPE_REQ = 'Bearer ';
     protected APIEndpoint: string;
@@ -59,7 +60,7 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
             authenticationRequest = request.clone(
                 { headers: request.headers.set(this.HEADER_REQ, this.TOKEN_TYPE_REQ + this.authenticationService.getBlibsToken()) });
         }
-        // return next.handle(authenticationRequest);
+        return next.handle(authenticationRequest);
 
         /*
         return next.handle(authenticationRequest).do((event: HttpEvent<any>) => {
@@ -95,24 +96,6 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
                 return throwError(error);
             }));
         */
-        return next.handle(authenticationRequest).pipe(
-            map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                    // console.log('event--->', event);
-                }
-                return event;
-            }),
-            catchError((error: HttpErrorResponse) => {
-                let data = {};
-                data = {
-                    reason: error && error.error && error.error.reason ? error.error.reason : '',
-                    status: error.status
-                };
-                this.blibsToastService.update(`${JSON.stringify(data)}`);
-                this.blibsToastService.show();
-                this.blibsErrorService.collectFailedRequest(authenticationRequest);
-                return throwError(error);
-            }));
     }
 
     // Firstly, run this function! To connect api endpoint!
@@ -248,7 +231,7 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseI
         } else {
             errorMessage = `:( Error server code : ${error.status} => Message: ${error.message}`;
         }
-        this.logWritter(errorMessage);
+        // this.logWritter(errorMessage);
         return throwError(errorMessage);
     }
 

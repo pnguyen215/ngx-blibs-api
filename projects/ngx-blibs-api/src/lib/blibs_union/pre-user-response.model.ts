@@ -2,6 +2,7 @@ import { AddressResponse } from './address-response.model';
 import { AuthResponse } from './auth-response.model';
 import { SocialNetworksResponse } from './social-networks-response.model';
 import { UserPrivilegesResponse } from './user-privileges-response.model';
+import { UserResponse } from './user-response.model';
 
 export class PreUserResponse extends AuthResponse {
     username: string;
@@ -59,21 +60,4 @@ export class PreUserResponse extends AuthResponse {
         }
     };
 
-    setUser(user: any) {
-        this.id = user.id;
-        this.username = user.username || '';
-        this.password = user.password || '';
-        this.fullname = user.fullname || '';
-        this.email = user.email || '';
-        this.pic = user.pic || './assets/media/users/default.jpg';
-        this.roles = user.roles || [];
-        this.occupation = user.occupation || '';
-        this.companyName = user.companyName || '';
-        this.phone = user.phone || '';
-        this.address = user.address;
-        this.socialNetworks = user.socialNetworks;
-        this.roleIds = user.roleIds;
-        this.rolesOrder = user.rolesOrder;
-        this.user_prv = user.user_prv;
-    }
 }

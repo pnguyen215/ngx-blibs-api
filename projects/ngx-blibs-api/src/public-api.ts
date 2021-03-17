@@ -28,6 +28,7 @@ export * from './lib/blibs_union/privileges-response.model';
 export * from './lib/blibs_union/social-networks-response.model';
 export * from './lib/blibs_union/user-privileges-response.model';
 export * from './lib/blibs_union/user-response.model';
+export * from './lib/blibs_union/sign-in-response.model';
 
 /* service */
 export * from './lib/ngx-blibs-api.service'; // base root service

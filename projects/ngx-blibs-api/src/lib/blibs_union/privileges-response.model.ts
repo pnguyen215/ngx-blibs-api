@@ -14,14 +14,16 @@ export class PrivilegesResponse {
     // tslint:disable-next-line: variable-name
     is_delete: boolean;
 
-    setPrivilegesResponse(privileges: any) {
-        this.setRead(privileges.is_read || false);
-        this.setAppend(privileges.is_append || false);
-        this.setView(privileges.is_view || false);
-        this.setAppendTo(privileges.is_append_to || false);
-        this.setWrite(privileges.is_write || false);
-        this.setCreate(privileges.is_create || false);
-        this.setDelete(privileges.is_delete || false);
+    setPrivilegesResponse(privileges: any): PrivilegesResponse {
+        const privilege = new PrivilegesResponse();
+        privilege.setRead(privileges.is_read || false);
+        privilege.setAppend(privileges.is_append || false);
+        privilege.setView(privileges.is_view || false);
+        privilege.setAppendTo(privileges.is_append_to || false);
+        privilege.setWrite(privileges.is_write || false);
+        privilege.setCreate(privileges.is_create || false);
+        privilege.setDelete(privileges.is_delete || false);
+        return privilege;
     }
 
     public buildPrivilegesResponse(privileges: any): PrivilegesResponse {
@@ -33,7 +35,6 @@ export class PrivilegesResponse {
         privilege.setWrite(privileges.is_write || false);
         privilege.setCreate(privileges.is_create || false);
         privilege.setDelete(privileges.is_delete || false);
-
         return privilege;
     }
 

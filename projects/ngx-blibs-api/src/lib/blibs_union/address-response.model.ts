@@ -10,14 +10,16 @@ export class AddressResponse extends ESGActorResponse {
     postCode: string;
 
 
-    setAddressResponse(address: any) {
-        this.setAddressLine(address.addressLine || 'system-addr-line');
-        this.setCity(address.city || '');
-        this.setProvince(address.province || '');
-        this.setDistrict(address.district || '');
-        this.setWard(address.ward || '');
-        this.setState(address.state || '');
-        this.setPostCode(address.postCode || '10100'); // if null then assign post-code system: 10100
+    setAddress(address: any) {
+        const addressResponse = new AddressResponse();
+        addressResponse.setAddressLine(address.addressLine || 'system-addr-line');
+        addressResponse.setCity(address.city || '');
+        addressResponse.setProvince(address.province || '');
+        addressResponse.setDistrict(address.district || '');
+        addressResponse.setWard(address.ward || '');
+        addressResponse.setState(address.state || '');
+        addressResponse.setPostCode(address.postCode || '10100'); // if null then assign post-code system: 10100
+        return addressResponse;
     }
 
     public setAddressLine(addressLine: string) {

@@ -6,12 +6,11 @@ import { UserBuzzRoutes } from '../blibs-endpoint/user-buzz-routes.module';
 import * as CONST from '../blibs_const/blibs-const';
 import { AuthResponse } from '../blibs_union/auth-response.model';
 import { UserResponse } from '../blibs_union/user-response.model';
-import { BlibsAuthZHTTPService } from './blibs-auth-zhttp.service';
 import { BlibsStorageService } from './blibs-storage.service';
 @Injectable({
   providedIn: 'root'
 })
-export class BlibsAuthenticationService implements OnDestroy {
+export class BlibsAuthenticationService {
 
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
@@ -23,16 +22,13 @@ export class BlibsAuthenticationService implements OnDestroy {
 
   constructor(
     private blibsStorageService: BlibsStorageService,
-    private blibsAuthHttpService: BlibsAuthZHTTPService,
     private router: Router
   ) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.currentUserSubject = new BehaviorSubject<UserResponse>(undefined);
     this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
-    // tslint:disable-next-line: deprecation
-    const subscribe = this.getUserByToken().subscribe();
-    this.unsubscribe.push(subscribe);
+
   }
 
   get currentUserValue(): UserResponse {
@@ -43,29 +39,9 @@ export class BlibsAuthenticationService implements OnDestroy {
     this.currentUserSubject.next(user);
   }
 
-  login(email: string, password: string): Observable<UserResponse> {
-    this.isLoadingSubject.next(true);
-    return this.blibsAuthHttpService.login(email, password).pipe(
-      map((auth: AuthResponse) => {
-        const result = this.saveInfoAuth(auth);
-        return result;
-      }),
-      switchMap(() => this.getUserByToken()),
-      catchError((err) => {
-        console.error('err [login]', err);
-        return of(undefined);
-      }),
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
-
   isAuthenticated(): boolean {
     const auth = this.getInfoAuth();
     if (!auth || !auth.accessToken) {
-      return false;
-    }
-    if (this.getBlibsToken() === null ||
-      this.getBlibsToken() === '') {
       return false;
     }
     return true;
@@ -77,8 +53,8 @@ export class BlibsAuthenticationService implements OnDestroy {
     return auth.accessToken;
   }
 
-  getBlibsRoles(): number[] {
-    return this.blibsStorageService.get(CONST.Storage.USER_INFO).rolesOrder;
+  getBlibsRoles(): any {
+    return this.getInfoUser().rolesOrder;
   }
 
   isBlibsRoleAvaliable(value: any): boolean {
@@ -110,57 +86,53 @@ export class BlibsAuthenticationService implements OnDestroy {
   }
 
   getUserId(): any {
-    return this.blibsStorageService.get(CONST.Storage.USER_INFO).id;
+    return this.getInfoUser().id;
   }
 
   getUserPrivileges(): any {
-    return this.blibsStorageService.get(CONST.Storage.USER_INFO).user_prv.privileges;
+    return this.getInfoUser().user_prv.privileges;
   }
 
   isTokenExpired(): boolean {
-    const expiredIn = this.blibsStorageService.get(CONST.Storage.TOKEN).expiresIn;
+    const expiredIn = this.getInfoAuth().expiresIn;
     // tslint:disable-next-line: new-parens
     return (Math.floor((new Date).getTime() / 1000)) >= expiredIn;
   }
 
   isManualTokenExpired(value: number): boolean {
-    const expiredIn = this.blibsStorageService.get(CONST.Storage.TOKEN).expiresIn;
     // tslint:disable-next-line: new-parens
     return (Math.floor((new Date).getTime() / 1000)) >= value;
   }
 
   logout() {
     if (this.isBlibsLogoutGlobal()) {
-      console.log('[INFO IS DELETED]');
+      // do something...
     }
     this.router.navigate([`${UserBuzzRoutes.AUTH_SIGN_IN}`], {
       queryParams: {},
     });
   }
 
-  getUserByToken(): Observable<UserResponse> {
-    const auth = this.getInfoAuth();
-    if (!auth || !auth.accessToken) {
-      return of(undefined);
+  saveInfoUser(user: UserResponse): boolean {
+    if (user && user.username) {
+      this.blibsStorageService.set(CONST.Storage.USER_INFO, user);
+      return true;
     }
-
-    this.isLoadingSubject.next(true);
-    return this.blibsAuthHttpService.getUserByToken().pipe(
-      map((user: UserResponse) => {
-        if (user) {
-          this.blibsStorageService.set(CONST.Storage.USER_INFO, user);
-          this.currentUserSubject = new BehaviorSubject<UserResponse>(user);
-        } else {
-          this.logout();
-        }
-        return user;
-      }),
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return false;
   }
 
-  private saveInfoAuth(auth: AuthResponse): boolean {
-    // store auth accessToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
+  getInfoUser(): UserResponse {
+    try {
+      const user = this.blibsStorageService.get(CONST.Storage.USER_INFO);
+      return user;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  }
+
+  // store auth accessToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
+  saveInfoAuth(auth: AuthResponse): boolean {
     if (auth && auth.accessToken) {
       this.blibsStorageService.set(CONST.Storage.TOKEN, auth);
       return true;
@@ -170,12 +142,6 @@ export class BlibsAuthenticationService implements OnDestroy {
 
   private getInfoAuth(): AuthResponse {
     try {
-      /*
-      const authData = JSON.parse(
-        localStorage.getItem(CONST.Storage.TOKEN)
-      );
-      return authData;
-      */
       const authStorages = this.blibsStorageService.get(CONST.Storage.TOKEN);
       return authStorages;
     } catch (error) {
@@ -184,7 +150,4 @@ export class BlibsAuthenticationService implements OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe());
-  }
 }

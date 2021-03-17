@@ -10,11 +10,17 @@ export class AuthResponse extends ESGActorResponse {
     organization: string;
     status: string;
 
-    setAuthResponse(auth: any) {
-        this.accessToken = auth.accessToken;
-        this.refreshToken = auth.refreshToken;
-        this.expiresIn = auth.expiresIn || 7200;
-        this.expiresDate = auth.expiresDate || new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
+    setAuth(auth: any): AuthResponse {
+        const authResponse = new AuthResponse();
+        authResponse.setAccessToken(auth.accessToken);
+        authResponse.setRefreshToken(auth.refreshToken);
+        authResponse.setExpiresIn(auth.expiresIn || 7200);
+        authResponse.setExpiresDate(auth.expiresDate || new Date(Date.now() + 100 * 24 * 60 * 60 * 1000));
+        authResponse.setScope(auth.scope);
+        authResponse.setCode(auth.code);
+        authResponse.setOrganization(auth.organization || '');
+        authResponse.setStatus(auth.status || '');
+        return authResponse;
     }
 
     public setScope(scope: string) {

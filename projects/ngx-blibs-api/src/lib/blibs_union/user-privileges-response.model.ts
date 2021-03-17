@@ -5,6 +5,13 @@ export class UserPrivilegesResponse {
     n_roles: string[];
     privileges: PrivilegesResponse;
 
+    setUserPrivileges(userPrivileges: any): UserPrivilegesResponse {
+        const userPrivilege = new UserPrivilegesResponse();
+        userPrivilege.setNRoles(userPrivileges.n_roles || '');
+        userPrivilege.setPrivileges(userPrivileges.privileges);
+        return userPrivilege;
+    }
+
     public setNRoles(nRoles: string[]) {
         this.n_roles = nRoles;
     }

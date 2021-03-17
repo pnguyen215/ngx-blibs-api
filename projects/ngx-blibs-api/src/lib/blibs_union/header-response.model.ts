@@ -4,11 +4,13 @@ export class HeaderResponse {
     type: string;
     description: string;
 
-    setHeaderResponse(header: any) {
-        this.setCode(header.code);
-        this.setText(header.text);
-        this.setType(header.type);
-        this.setDescription(header.description);
+    setHeader(header: any): HeaderResponse {
+        const headerResponse = new HeaderResponse();
+        headerResponse.setCode(header.code);
+        headerResponse.setText(header.text);
+        headerResponse.setType(header.type);
+        headerResponse.setDescription(header.description);
+        return headerResponse;
     }
 
     public setCode(code: number) {
