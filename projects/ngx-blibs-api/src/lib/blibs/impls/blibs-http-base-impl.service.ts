@@ -34,7 +34,21 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseS
 
 
     protected get headers() {
-        return new HttpHeaders({ 'Content-Type': 'application/json' });
+        // return new HttpHeaders({ 'Content-Type': 'application/json' });
+        /*
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json; charset=utf-8', Authorization: `Bearer ${this.authenticationService.getBlibsToken()}`,
+        });
+        */
+        let headers = new HttpHeaders({
+            'Content-Type': 'application/json; charset=utf-8',
+        });
+
+        if (this.authenticationService.isAuthenticated()) {
+            headers = headers.append('Authorization', `Bearer ${this.authenticationService.getBlibsToken()}`);
+        }
+
+        return headers;
     }
 
     /*

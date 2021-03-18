@@ -41,7 +41,7 @@ export class BlibsAuthenticationService {
 
   isAuthenticated(): boolean {
     const auth = this.getInfoAuth();
-    if (!auth || !auth.accessToken) {
+    if (!auth || !auth.accessToken || auth.accessToken === '') {
       return false;
     }
     return true;
@@ -50,11 +50,18 @@ export class BlibsAuthenticationService {
   getBlibsToken(): string {
     /* return this.blibsStorageService.get((CONST.Storage.TOKEN)); */
     const auth = this.getInfoAuth();
-    return auth.accessToken;
+    if (auth) {
+      return auth.accessToken;
+    }
+    return '';
   }
 
   getBlibsRoles(): any {
-    return this.getInfoUser().rolesOrder;
+    const user = this.getInfoUser();
+    if (user) {
+      return user.rolesOrder;
+    }
+    return '';
   }
 
   isBlibsRoleAvaliable(value: any): boolean {
