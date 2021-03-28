@@ -41,6 +41,7 @@ export * from './lib/blibs/blibs-toast.service';
 export * from './lib/blibs/blibs-cache.service';
 export * from './lib/blibs/blibs-error.service';
 export * from './lib/blibs/blibs-log-req.service';
+export * from './lib/blibs/blibs-logger.service';
 
 /* impls */
 export * from './lib/blibs/impls/blibs-dev-toastr-impl.service';
