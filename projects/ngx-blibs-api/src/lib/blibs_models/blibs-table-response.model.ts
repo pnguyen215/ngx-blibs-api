@@ -16,7 +16,7 @@ export interface IBlibsTableState {
 export interface BlibsTableResponseModel<T> {
     message?: string;
     publish?: Date;
-    data?: BlibsPageModel<T>;
+    data?: BlibsPageModel<T> | T;
     items: T[];
     total: number;
     gwt?: Date;

@@ -42,6 +42,8 @@ export * from './lib/blibs/blibs-cache.service';
 export * from './lib/blibs/blibs-error.service';
 export * from './lib/blibs/blibs-log-req.service';
 export * from './lib/blibs/blibs-logger.service';
+export * from './lib/blibs/blibs-http-extensions';
+export * from './lib/blibs/blibs-table.service';
 
 /* impls */
 export * from './lib/blibs/impls/blibs-dev-toastr-impl.service';
@@ -53,7 +55,7 @@ export * from './lib/blibs/impls/blibs-cache-impl.service';
 export * from './lib/blibs/interceptors/index';
 
 
-// guard 
+// guard
 export * from './lib/blibs_guard/blibs-auth.guard';
 
 // utils
