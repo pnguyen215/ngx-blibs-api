@@ -45,6 +45,7 @@ export interface IBlibsFetchSelectedAction {
     grouping: BlibsGroupingState;
     ngOnInit(): void;
     fetchSelected(): void;
+    fetchAll(): void;
 }
 
 export interface IBlibsUpdateStatusForSelectedAction {

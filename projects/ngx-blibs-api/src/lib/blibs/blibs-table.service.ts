@@ -74,6 +74,7 @@ export abstract class BlibsTableService<T> {
     protected HostAPIEndpoint: string;
     protected relativeUrl = '';
     protected numberRetry = 1;
+    protected params: HttpParams;
 
     constructor(
         http: HttpClient,
@@ -108,6 +109,10 @@ export abstract class BlibsTableService<T> {
 
     setRelativeUrlApi(relativeUrl: string): void {
         this.relativeUrl = relativeUrl ? relativeUrl : '';
+    }
+
+    setParams(params: HttpParams) {
+        this.params = params;
     }
 
     create(obj: BlibsBaseModel): Observable<BlibsTableResponseModel<T>> {
@@ -364,6 +369,51 @@ export abstract class BlibsTableService<T> {
         this._isLoading$.next(true);
         this._errorMessage.next('');
         const request = this.findWP(this._tableState$.value)
+            .pipe(
+                tap((resObjs: BlibsTableResponseModel<T>) => {
+                    this._items$.next(resObjs.items);
+                    this.patchStateWithoutFetch({
+                        paginator: this._tableState$.value.paginator.recalculatePaginator(
+                            resObjs.total
+                        ),
+                    });
+                }),
+                catchError((err) => {
+                    this._errorMessage.next(err);
+                    return of({
+                        items: [],
+                        total: 0,
+                        message: '',
+                        publish: new Date(),
+                        data: null,
+                        gwt: new Date(),
+                        header: null
+                    });
+                }),
+                finalize(() => {
+                    this._isLoading$.next(false);
+                    const itemIds = this._items$.value.map((el: T) => {
+                        const item = (el as unknown) as BlibsBaseModel;
+                        return item.id;
+                    });
+                    this.patchStateWithoutFetch({
+                        grouping: this._tableState$.value.grouping.clearRows(itemIds),
+                    });
+                })
+            )
+            // tslint:disable-next-line: deprecation
+            .subscribe();
+        this._subscriptions.push(request);
+    }
+
+
+    /**
+     * @apiNote - get all params as form HttpParams
+     */
+    public fetchWithParams() {
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const request = this.getWithParams(this.params, this._tableState$.value)
             .pipe(
                 tap((resObjs: BlibsTableResponseModel<T>) => {
                     this._items$.next(resObjs.items);
