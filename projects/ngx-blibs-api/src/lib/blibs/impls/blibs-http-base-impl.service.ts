@@ -168,6 +168,17 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseS
             catchError(this.handleError));
     }
 
+    deleteByIds(relativeUrl: string, listId: number[]): Observable<any> {
+        let url = this.APIEndpoint.concat(relativeUrl);
+        if (!url.endsWith('?')) {
+            url = url.concat('?');
+        }
+        return this.http.delete<any>(url + listId, {
+            headers: this.headers
+        }).pipe(retry(this.numberRetry),
+            catchError(this.handleError));
+    }
+
     deleteAll(relativeUrl: string): Observable<any> {
         const url = this.APIEndpoint.concat(relativeUrl);
         return this.http.delete<any>(url, {

@@ -64,4 +64,13 @@ export * from './lib/blibs_guard/blibs-auth.guard';
 // export * from './lib/blibs-endpoint/user-buzz-endpoint.model';
 // export * from './lib/blibs-endpoint/user-buzz-routes.module';
 
-
+// blibs models
+export { BlibsBaseModel } from './lib/blibs_models/blibs-base.model';
+export * from './lib/blibs_models/blibs-filter.model';
+export * from './lib/blibs_models/blibs-grouping.model';
+export * from './lib/blibs_models/blibs-header.model';
+export * from './lib/blibs_models/blibs-page.model';
+export * from './lib/blibs_models/blibs-paginator-state.model';
+export * from './lib/blibs_models/blibs-search.model';
+export * from './lib/blibs_models/blibs-sort.model';
+export * from './lib/blibs_models/blibs-table-response.model';

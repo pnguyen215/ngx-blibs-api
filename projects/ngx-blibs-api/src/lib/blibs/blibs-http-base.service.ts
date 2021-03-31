@@ -22,6 +22,9 @@ export abstract class BlibsHttpBaseService {
 
   abstract deleteById(relativeUrl: string, id: number): Observable<any>;
 
+  // tslint:disable-next-line: unified-signatures
+  abstract deleteByIds(relativeUrl: string, listId: number[]): Observable<any>;
+
   abstract deleteAll(relativeUrl: string): Observable<any>;
 
   abstract createHttps(method: string, relativeUrl: string, data: any): Observable<any>;
