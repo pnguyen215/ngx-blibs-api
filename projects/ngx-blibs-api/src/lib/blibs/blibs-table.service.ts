@@ -143,7 +143,8 @@ export abstract class BlibsTableService<T> {
     }
 
     // READ (Returning filtered list of entities)
-    findWP(tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
+    /*
+        findWP(tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
             return;
@@ -167,9 +168,10 @@ export abstract class BlibsTableService<T> {
             })
         );
     }
+    */
 
     // READ (Returning filtered list of entities)
-    findWG(tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
+    findWithGet(tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
             return;
@@ -285,9 +287,14 @@ export abstract class BlibsTableService<T> {
             this.logger.error('Can not connect to HOST');
             return;
         }
+
+        if (!id) {
+            return of({});
+        }
+
         this._isLoading$.next(true);
         this._errorMessage.next('');
-        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl).concat('?id=') + `${id}`;
         return this.http.delete(url, { headers: this.headers }).pipe(
             catchError(err => {
                 this._errorMessage.next(err);
@@ -354,7 +361,7 @@ export abstract class BlibsTableService<T> {
 
     public patchState(patch: Partial<IBlibsTableState>) {
         this.patchStateWithoutFetch(patch);
-        this.fetch();
+        this.fetchWithParams();
     }
 
     public patchStateWithoutFetch(patch: Partial<IBlibsTableState>) {
@@ -362,55 +369,15 @@ export abstract class BlibsTableService<T> {
         this._tableState$.next(newState);
     }
 
-    /**
-     * @apiNote - get all params as form HttpParams
-     */
-    public fetch() {
-        this._isLoading$.next(true);
-        this._errorMessage.next('');
-        const request = this.findWP(this._tableState$.value)
-            .pipe(
-                tap((resObjs: BlibsTableResponseModel<T>) => {
-                    this._items$.next(resObjs.items);
-                    this.patchStateWithoutFetch({
-                        paginator: this._tableState$.value.paginator.recalculatePaginator(
-                            resObjs.total
-                        ),
-                    });
-                }),
-                catchError((err) => {
-                    this._errorMessage.next(err);
-                    return of({
-                        items: [],
-                        total: 0,
-                        message: '',
-                        publish: new Date(),
-                        data: null,
-                        gwt: new Date(),
-                        header: null
-                    });
-                }),
-                finalize(() => {
-                    this._isLoading$.next(false);
-                    const itemIds = this._items$.value.map((el: T) => {
-                        const item = (el as unknown) as BlibsBaseModel;
-                        return item.id;
-                    });
-                    this.patchStateWithoutFetch({
-                        grouping: this._tableState$.value.grouping.clearRows(itemIds),
-                    });
-                })
-            )
-            // tslint:disable-next-line: deprecation
-            .subscribe();
-        this._subscriptions.push(request);
-    }
-
 
     /**
      * @apiNote - get all params as form HttpParams
      */
     public fetchWithParams() {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
         this._isLoading$.next(true);
         this._errorMessage.next('');
         const request = this.getWithParams(this.params, this._tableState$.value)
