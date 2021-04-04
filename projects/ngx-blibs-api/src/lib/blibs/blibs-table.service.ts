@@ -177,6 +177,7 @@ export abstract class BlibsTableService<T> {
             return;
         }
         const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        this._isLoading$.next(true);
         this._errorMessage.next('');
         return this.http.get<BlibsTableResponseModel<T>>(url, { headers: this.headers }).pipe(
             retry(this.numberRetry),
@@ -203,6 +204,7 @@ export abstract class BlibsTableService<T> {
             return;
         }
         const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        this._isLoading$.next(true);
         this._errorMessage.next('');
         return this.http.get<BlibsTableResponseModel<T>>(url, { headers: this.headers, params }).pipe(
             retry(this.numberRetry),
