@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders, HttpInterceptor, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, forkJoin, Observable, of, Subscription } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
+import { BehaviorSubject, forkJoin, Observable, of, Subscription, throwError } from 'rxjs';
 import { catchError, finalize, retry, tap } from 'rxjs/operators';
 import { BlibsBaseModel } from '../blibs_models/blibs-base.model';
 import { BlibsGroupingState } from '../blibs_models/blibs-grouping.model';
@@ -128,6 +128,7 @@ export abstract class BlibsTableService<T> {
             catchError(err => {
                 this._errorMessage.next(err);
                 this.logger.error('Create obj has error', err);
+                // this.handleError(err);
                 return of({
                     items: [],
                     total: 0,
@@ -371,6 +372,330 @@ export abstract class BlibsTableService<T> {
         this._tableState$.next(newState);
     }
 
+    /**
+     * @param method - name method require
+     * @param obj - body request
+     * @apiNote - create http request to server api
+     */
+    createHttps(method: string, obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.request(
+            method, url, {
+            body: JSON.stringify(obj),
+            headers: this.headers,
+            responseType: 'json',
+            reportProgress: true
+        })
+            .pipe(retry(this.numberRetry),
+                catchError(err => {
+                    this._errorMessage.next(err);
+                    this.logger.error('Create https has error', err);
+                    return of({});
+                }),
+            );
+    }
+
+    /**
+     * @param method - name method require
+     * @param obj - body request
+     * @apiNote - create http request to server api
+     */
+    _createHttps(method: string, params: HttpParams, obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.request(
+            method, url, {
+            body: JSON.stringify(obj),
+            headers: this.headers,
+            params,
+            responseType: 'json',
+            reportProgress: true
+        })
+            .pipe(retry(this.numberRetry),
+                catchError(err => {
+                    this._errorMessage.next(err);
+                    this.logger.error('Create https has error', err);
+                    return of({});
+                }),
+            );
+    }
+
+    /**
+     * @param method - name method require
+     * @param files - stream file require
+     * @param obj - body request
+     * @apiNote - upload files
+     */
+    uploadParts(method: string, files: File, obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        const data: FormData = new FormData();
+        data.append('files', files);
+        data.append('filesRequest', JSON.stringify(obj));
+        const requests = new HttpRequest(
+            `${method}`,
+            `${url}`,
+            data, {
+            headers: this.headers,
+            reportProgress: true,
+            responseType: 'json'
+        });
+        return this.http.request(requests).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Upload item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+
+    /**
+     * @param method - name method require
+     * @param files - stream file require
+     * @param obj - body request
+     * @apiNote - upload files
+     */
+    _uploadParts(method: string, form: FormData): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        const requests = new HttpRequest(
+            `${method}`,
+            `${url}`,
+            form, {
+            headers: this.headers,
+            reportProgress: true,
+            responseType: 'json'
+        });
+        return this.http.request(requests).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Upload item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param method - name method require
+     * @param files - stream file require
+     * @param obj - body request
+     * @apiNote - upload files
+     */
+    __uploadParts(method: string, params: HttpParams, form: FormData): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        const requests = new HttpRequest(
+            `${method}`,
+            `${url}`,
+            form, {
+            headers: this.headers,
+            reportProgress: true,
+            params,
+            responseType: 'json'
+        });
+        return this.http.request(requests).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Upload item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - body request
+     * @apiNote - downloade file includes: pdf, excel, json, images
+     */
+    donwnloadWithParams(params: HttpParams): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.get(url, {
+            headers: this.headers,
+            responseType: 'arraybuffer' as 'json',
+            params
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - body request
+     * @apiNote - downloade file includes: pdf, excel, json, images
+     */
+    _donwnloadWithParams(params: HttpParams, obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.post(url, JSON.stringify(obj), {
+            headers: this.headers,
+            responseType: 'arraybuffer' as 'json',
+            params
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - body request
+     * @apiNote - downloade file includes: pdf, excel, json, images
+     */
+    __donwnloadWithParams(obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.post(url, JSON.stringify(obj), {
+            headers: this.headers,
+            responseType: 'arraybuffer' as 'json'
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - body request
+     * @apiNote - downloade file includes: csv
+     */
+    donwnloadWithParamsCsv(params: HttpParams): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.get(url, {
+            headers: this.headers.append('Accept', 'text/csv; charset=utf-8'),
+            responseType: 'text',
+            params
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item csv has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - body request
+     * @apiNote - downloade file includes: csv
+     */
+    _donwnloadWithParamsCsv(params: HttpParams, obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.post(url, JSON.stringify(obj), {
+            headers: this.headers.append('Accept', 'text/csv; charset=utf-8'),
+            responseType: 'text',
+            params
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item csv has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+
+    /**
+     * @param params - body request
+     * @apiNote - downloade file includes: csv
+     */
+    __donwnloadWithParamsCsv(obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.post(url, JSON.stringify(obj), {
+            headers: this.headers.append('Accept', 'text/csv; charset=utf-8'),
+            responseType: 'text',
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item csv has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
 
     /**
      * @apiNote - get all params as form HttpParams
@@ -432,5 +757,17 @@ export abstract class BlibsTableService<T> {
         this._isLoading$.next(true);
         this._tableState$.next(DEFAULT_STATE);
         this._errorMessage.next('');
+    }
+
+    protected handleError(error: any) {
+        // tslint:disable-next-line: prefer-const
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+            errorMessage = error.error.message;
+        } else {
+            errorMessage = `:( Error server code : ${error.status} => Message: ${error.message}`;
+        }
+        // this.logWritter(errorMessage);
+        return throwError(errorMessage);
     }
 }
