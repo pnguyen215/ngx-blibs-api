@@ -1,8 +1,8 @@
 
 
-export class BlibsBaseUtils {
-    readonly DELIMITER = '/';
-    readonly DELIMITER_REQUEST = '-';
+export default class BlibsBaseUtils {
+    static readonly DELIMITER = '/';
+    static readonly DELIMITER_REQUEST = '-';
     /**
      * @param val Check for null Object
      */
@@ -96,24 +96,7 @@ export class BlibsBaseUtils {
       * @param dateRequest - dateRequest in form : dd/MM/yyyy
       * @apiNote - return string in form: yyyy-mm-dd
       */
-    onChangeDateAsiaNormalizeToISO(dateRequest): string | null {
-        if (!dateRequest) {
-            return '';
-        }
-        const times = dateRequest.split(this.DELIMITER);
-        const forms = {
-            day: parseInt(times[0], 10),
-            month: parseInt(times[1], 10),
-            year: parseInt(times[2], 10),
-        };
-        return forms.year + this.DELIMITER_REQUEST + forms.month + this.DELIMITER_REQUEST + forms.day;
-    }
-
-    /***
-      * @param dateRequest - dateRequest in form : dd/MM/yyyy
-      * @apiNote - return string in form: yyyy-mm-dd
-      */
-    onChangeDateNormalizeManual(dateRequest: any, delimeter: string, delimeterRequest: string): string | null {
+    static onChangeDateNormalizeManual(dateRequest: any, delimeter: string, delimeterRequest: string): string | null {
         if (!dateRequest) {
             return '';
         }
@@ -127,10 +110,27 @@ export class BlibsBaseUtils {
     }
 
     /***
+      * @param dateRequest - dateRequest in form : dd/MM/yyyy
+      * @apiNote - return string in form: yyyy-mm-dd
+      */
+    static onChangeDateAsiaNormalizeToISO(dateRequest): string | null {
+        if (!dateRequest) {
+            return '';
+        }
+        const times = dateRequest.split(this.DELIMITER);
+        const forms = {
+            day: parseInt(times[0], 10),
+            month: parseInt(times[1], 10),
+            year: parseInt(times[2], 10),
+        };
+        return forms.year + this.DELIMITER_REQUEST + forms.month + this.DELIMITER_REQUEST + forms.day;
+    }
+
+    /***
       * @param date - date in ISO form : yyyy-MM-dd HH:mm:ss
       * @apiNote - return number mliseconds
       */
-    onChangeDateToMilliseconds(date): number | null {
+    static onChangeDateToMilliseconds(date): number | null {
         if (!date) {
             return 0;
         }
@@ -138,3 +138,5 @@ export class BlibsBaseUtils {
         return dateInTime.getTime();
     }
 }
+
+// export const blibsBaseUtils = new BlibsBaseUtils();
