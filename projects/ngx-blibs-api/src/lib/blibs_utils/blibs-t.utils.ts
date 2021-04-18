@@ -1,6 +1,8 @@
 
 
-export class BlibsTUtils {
+export class BlibsBaseUtils {
+    readonly DELIMITER = '/';
+    readonly DELIMITER_REQUEST = '-';
     /**
      * @param val Check for null Object
      */
@@ -88,5 +90,51 @@ export class BlibsTUtils {
     public static sentenceCase(str) {
         // Replace first char of each sentence (new line or after '.\s+') to
         return this.lowerCase(str).replace(/(^\w)|\.\s+(\w)/gm, this.upperCase);
+    }
+
+    /***
+      * @param dateRequest - dateRequest in form : dd/MM/yyyy
+      * @apiNote - return string in form: yyyy-mm-dd
+      */
+    onChangeDateAsiaNormalizeToISO(dateRequest): string | null {
+        if (!dateRequest) {
+            return '';
+        }
+        const times = dateRequest.split(this.DELIMITER);
+        const forms = {
+            day: parseInt(times[0], 10),
+            month: parseInt(times[1], 10),
+            year: parseInt(times[2], 10),
+        };
+        return forms.year + this.DELIMITER_REQUEST + forms.month + this.DELIMITER_REQUEST + forms.day;
+    }
+
+    /***
+      * @param dateRequest - dateRequest in form : dd/MM/yyyy
+      * @apiNote - return string in form: yyyy-mm-dd
+      */
+    onChangeDateNormalizeManual(dateRequest: any, delimeter: string, delimeterRequest: string): string | null {
+        if (!dateRequest) {
+            return '';
+        }
+        const times = dateRequest.split(delimeter);
+        const forms = {
+            day: parseInt(times[0], 10),
+            month: parseInt(times[1], 10),
+            year: parseInt(times[2], 10),
+        };
+        return forms.year + delimeterRequest + forms.month + delimeterRequest + forms.day;
+    }
+
+    /***
+      * @param date - date in ISO form : yyyy-MM-dd HH:mm:ss
+      * @apiNote - return number mliseconds
+      */
+    onChangeDateToMilliseconds(date): number | null {
+        if (!date) {
+            return 0;
+        }
+        const dateInTime = new Date(date);
+        return dateInTime.getTime();
     }
 }
