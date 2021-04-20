@@ -30,6 +30,7 @@ export * from './lib/blibs_union/user-privileges-response.model';
 export * from './lib/blibs_union/user-response.model';
 export * from './lib/blibs_union/sign-in-response.model';
 
+
 /* service */
 export * from './lib/ngx-blibs-api.service'; // base root service
 export * from './lib/blibs/blibs-alert.service';
@@ -78,3 +79,4 @@ export * from './lib/blibs_models/blibs-paginator-state.model';
 export * from './lib/blibs_models/blibs-search.model';
 export * from './lib/blibs_models/blibs-sort.model';
 export * from './lib/blibs_models/blibs-table-response.model';
+export * from './lib/blibs_models/blibs-request.model';

@@ -9,7 +9,7 @@ export interface IBlibsPaginatorState {
 
 export class BlibsPaginatorState implements IBlibsPaginatorState {
     page = 1;
-    pageSize = BlibsPageSizes[5];
+    pageSize = BlibsPageSizes[2];
     total = 0;
     pageSizes: number[] = [];
 

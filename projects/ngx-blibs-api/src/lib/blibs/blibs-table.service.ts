@@ -118,6 +118,10 @@ export abstract class BlibsTableService<T> {
         this.params = params;
     }
 
+    /**
+     * @param obj - model request
+     * @apiNote - return object base on BlibsTableResponseModel<T>
+     */
     create(obj: BlibsBaseModel): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
@@ -146,6 +150,10 @@ export abstract class BlibsTableService<T> {
         );
     }
 
+    /**
+     * @param obj - model request
+     * @apiNote - return object any
+     */
     _create(obj: any): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
@@ -228,6 +236,43 @@ export abstract class BlibsTableService<T> {
         );
     }
 
+    /**
+     * @param params - params request
+     * @param tableState - tableState request
+     * @apiNote - return object BlibsTableResponseModel<T>
+     */
+    postWithParams(params: HttpParams, tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        return this.http.post<BlibsTableResponseModel<T>>(url, tableState, { headers: this.headers, params }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Post obj has error', err);
+                return of({
+                    items: [],
+                    total: 0,
+                    message: '',
+                    publish: new Date(),
+                    data: null,
+                    gwt: new Date(),
+                    header: null
+                });
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - params request
+     * @param tableState - tableState request
+     * @apiNote - return object BlibsTableResponseModel<T>
+     */
     getWithParams(params: HttpParams, tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
@@ -256,11 +301,16 @@ export abstract class BlibsTableService<T> {
     }
 
 
+    /**
+     * @param params - params request
+     * @apiNote - return object BlibsTableResponseModel<T>
+     */
     _getWithParams(params: HttpParams): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
             return;
         }
+        this.setParams(params);
         const url = this.HostAPIEndpoint.concat(this.relativeUrl);
         this._isLoading$.next(true);
         this._errorMessage.next('');
@@ -284,6 +334,11 @@ export abstract class BlibsTableService<T> {
     }
 
 
+    /**
+     * @param id - params request
+     * @param labelQuery - set label for query into params
+     * @apiNote - return object BlibsTableResponseModel<T>
+     */
     getWithId(id: any, labelQuery: string): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
@@ -313,6 +368,38 @@ export abstract class BlibsTableService<T> {
     }
 
 
+    /**
+     * @param params - params request
+     * @apiNote - return object any
+     */
+    __getWithParams(params: HttpParams): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this.setParams(params);
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        return this.http.get(url, { headers: this.headers, params: this.params }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Get obj has error', err);
+                return of({
+                    items: [],
+                    total: 0,
+                    message: '',
+                    publish: new Date(),
+                    data: null,
+                    gwt: new Date(),
+                    header: null
+                });
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
     updateWithParams(params: HttpParams, obj: BlibsBaseModel): Observable<any> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
@@ -331,7 +418,6 @@ export abstract class BlibsTableService<T> {
             finalize(() => this._isLoading$.next(false))
         );
     }
-
 
     updateItems(ids: number[], labelQuery: string, obj: BlibsBaseModel): Observable<any> {
         if (!this.HostAPIEndpoint) {
@@ -419,6 +505,13 @@ export abstract class BlibsTableService<T> {
         return params;
     }
 
+    // pathState - POST
+    public _patchState(patch: Partial<IBlibsTableState>) {
+        this.patchStateWithoutFetch(patch);
+        this._fetchWithParams();
+    }
+
+    // pathState - GET
     public patchState(patch: Partial<IBlibsTableState>) {
         this.patchStateWithoutFetch(patch);
         this.fetchWithParams();
@@ -487,6 +580,37 @@ export abstract class BlibsTableService<T> {
                 }),
             );
     }
+
+    /**
+     * @param method - name method require
+     * @param obj - body request
+     * @apiNote - create http request to server api
+     */
+    __createHttps(method: string, params: HttpParams): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.request(
+            method, url, {
+            // body: JSON.stringify(obj),
+            headers: this.headers,
+            params,
+            responseType: 'json',
+            reportProgress: true
+        })
+            .pipe(retry(this.numberRetry),
+                catchError(err => {
+                    this._errorMessage.next(err);
+                    this.logger.error('Create https has error', err);
+                    return of({});
+                }),
+            );
+    }
+
 
     /**
      * @param method - name method require
@@ -594,6 +718,33 @@ export abstract class BlibsTableService<T> {
 
     /**
      * @param params - body request
+     * @apiNote - downloade GET blobs
+     */
+    donwnloadBlobWithParams(params: HttpParams): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.get(url, {
+            headers: this.headers,
+            responseType: 'blob',
+            params
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - body request
      * @apiNote - downloade file includes: pdf, excel, json, images
      */
     donwnloadWithParams(params: HttpParams): Observable<any> {
@@ -607,6 +758,33 @@ export abstract class BlibsTableService<T> {
         return this.http.get(url, {
             headers: this.headers,
             responseType: 'arraybuffer' as 'json',
+            params
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - body request
+     * @apiNote - download POST blobs
+     */
+    _donwnloadBlobWithParams(params: HttpParams, obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.post(url, JSON.stringify(obj), {
+            headers: this.headers,
+            responseType: 'blob',
             params
         }).pipe(
             retry(this.numberRetry),
@@ -635,6 +813,32 @@ export abstract class BlibsTableService<T> {
             headers: this.headers,
             responseType: 'arraybuffer' as 'json',
             params
+        }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Download item has error', err);
+                return of({});
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - body request
+     * @apiNote - downloade POST blobs
+     */
+    __donwnloadBlobWithParams(obj: BlibsBaseModel): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.post(url, JSON.stringify(obj), {
+            headers: this.headers,
+            responseType: 'blob'
         }).pipe(
             retry(this.numberRetry),
             catchError(err => {
@@ -755,7 +959,55 @@ export abstract class BlibsTableService<T> {
 
 
     /**
-     * @apiNote - get all params as form HttpParams
+     * @apiNote - get all params as form HttpParams with POST
+     */
+    public _fetchWithParams() {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const request = this.postWithParams(this.params, this._tableState$.value)
+            .pipe(
+                tap((resObjs: BlibsTableResponseModel<T>) => {
+                    this._items$.next(resObjs.items);
+                    this.patchStateWithoutFetch({
+                        paginator: this._tableState$.value.paginator.recalculatePaginator(
+                            resObjs.total
+                        ),
+                    });
+                }),
+                catchError((err) => {
+                    this._errorMessage.next(err);
+                    return of({
+                        items: [],
+                        total: 0,
+                        message: '',
+                        publish: new Date(),
+                        data: null,
+                        gwt: new Date(),
+                        header: null
+                    });
+                }),
+                finalize(() => {
+                    this._isLoading$.next(false);
+                    const itemIds = this._items$.value.map((el: T) => {
+                        const item = (el as unknown) as BlibsBaseModel;
+                        return item.id;
+                    });
+                    this.patchStateWithoutFetch({
+                        grouping: this._tableState$.value.grouping.clearRows(itemIds),
+                    });
+                })
+            )
+            // tslint:disable-next-line: deprecation
+            .subscribe();
+        this._subscriptions.push(request);
+    }
+
+    /**
+     * @apiNote - get all params as form HttpParams with GET
      */
     public fetchWithParams() {
         if (!this.HostAPIEndpoint) {
