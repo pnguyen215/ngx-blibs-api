@@ -27,6 +27,10 @@ export class PreUserResponse extends AuthResponse {
     businessRolesDetails: object;
     address?: AddressResponse;
     socialNetworks?: SocialNetworksResponse;
+    suffixesAvatarUrl?: string;
+    activeAvatarUrl?: string;
+    displayAvatarUrl?: string;
+    avatarUrlSubstitute?: string;
     // personal information
     firstname: string;
     lastname: string;
