@@ -1,19 +1,17 @@
 {
   "name": "ngx-blibs-api",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run build:lib",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-angular-sl": "ng build angularSL",
-    "build-lib": "ng build ngx-blibs-api",
-    "npm-pack": "cd dist/blibs-api && npm pack",
-    "package": "npm run build-lib && npm run npm-pack",
+    "build:angular-sl": "ng build angularSL",
     "build:lib": "ng-packagr -p projects/ngx-blibs-api/package.json",
-    "auto": "npm run build:lib"
+    "build:lib:native": "ng build ngx-blibs-api",
+    "export:lib": "npm run build:lib && cd dist/ngx-blibs-api && npm link && npm pack",
+    "package:lib": "cd dist/ngx-blibs-api && npm link && npm pack"
   },
   "private": true,
   "dependencies": {

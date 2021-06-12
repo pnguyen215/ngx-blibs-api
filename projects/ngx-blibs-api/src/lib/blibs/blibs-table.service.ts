@@ -367,6 +367,38 @@ export abstract class BlibsTableService<T> {
      * @param tableState - tableState request
      * @apiNote - return object BlibsTableResponseModel<T>
      */
+    ___postWithParams(params: HttpParams, obj: BlibsBaseModel, tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        return this.http.post<BlibsTableResponseModel<T>>(url, tableState, { headers: this.headers, params }).pipe(
+            retry(this.numberRetry),
+            catchError(err => {
+                this._errorMessage.next(err);
+                this.logger.error('Post obj has error', err);
+                return of({
+                    items: [],
+                    total: 0,
+                    message: '',
+                    publish: new Date(),
+                    data: null,
+                    gwt: new Date(),
+                    header: null
+                });
+            }),
+            finalize(() => this._isLoading$.next(false))
+        );
+    }
+
+    /**
+     * @param params - params request
+     * @param tableState - tableState request
+     * @apiNote - return object BlibsTableResponseModel<T>
+     */
     getWithParams(params: HttpParams, tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');

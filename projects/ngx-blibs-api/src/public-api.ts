@@ -45,7 +45,8 @@ export * from './lib/blibs/blibs-log-req.service';
 export * from './lib/blibs/blibs-logger.service';
 export * from './lib/blibs/blibs-http-extensions';
 export * from './lib/blibs/blibs-table.service';
-export * from './lib/blibs/blibs-base-utils.service';
+export { BlibsBaseUtilsService } from './lib/blibs/blibs-base-utils.service';
+export { BlibsCollectionUtilsService } from './lib/blibs/blibs-collection-utils.service';
 
 /* impls */
 export * from './lib/blibs/impls/blibs-dev-toastr-impl.service';
@@ -59,11 +60,6 @@ export * from './lib/blibs/interceptors/index';
 
 // guard
 export * from './lib/blibs_guard/blibs-auth.guard';
-
-// utils
-// export * from './lib/blibs_utils/blibs-validator.utils';
-// export { blibsBaseUtils } from './lib/blibs_utils/blibs-t.utils';
-
 
 /* endpoint */
 // export * from './lib/blibs-endpoint/user-buzz-endpoint.model';
@@ -80,3 +76,7 @@ export * from './lib/blibs_models/blibs-search.model';
 export * from './lib/blibs_models/blibs-sort.model';
 export * from './lib/blibs_models/blibs-table-response.model';
 export * from './lib/blibs_models/blibs-request.model';
+
+
+// blibs variable
+// export * from './lib/blibs_variables/blibs-pattern-regex';

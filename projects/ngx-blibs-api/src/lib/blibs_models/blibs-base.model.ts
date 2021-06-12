@@ -7,4 +7,6 @@ export interface BlibsBaseModel {
     deleted?: boolean;
     archived?: boolean;
     description?: string;
+    createdAt?: Date;
+    modifiedAt?: Date;
 }

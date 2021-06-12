@@ -20,6 +20,7 @@ import { BlibsErrorService } from './blibs/blibs-error.service';
 import { BlibsLogReqService } from './blibs/blibs-log-req.service';
 import { BlibsLogReqComponent } from './blibs_unit/blibs-log-req/blibs-log-req.component';
 import { BlibsBaseUtilsService } from './blibs/blibs-base-utils.service';
+import { BlibsCollectionUtilsService } from './blibs/blibs-collection-utils.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ export class NgxBlibsApiModule {
         BlibsLogReqService,
         BlibsAuthenticationService,
         BlibsBaseUtilsService,
+        BlibsCollectionUtilsService,
         {
           provide: BlibsHttpBaseService,
           useClass: BlibsHttpBaseImplService
