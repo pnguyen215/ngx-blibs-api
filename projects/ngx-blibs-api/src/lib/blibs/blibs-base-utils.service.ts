@@ -55,12 +55,12 @@ export class BlibsBaseUtilsService {
   }
 
   areNotNull(...values: any): boolean {
-    if (values === null || values === undefined || values === 'undefined') {
+    if (values === null || values === undefined || values === 'undefined' || values === '') {
       return false;
     }
 
     for (const item of values) {
-      if (item === null || item === undefined || values === 'undefined') {
+      if (item === null || item === undefined || values === 'undefined' || values === '') {
         return false;
       }
     }
