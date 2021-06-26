@@ -41,7 +41,7 @@ export class BlibsHttpBaseImplService implements HttpInterceptor, BlibsHttpBaseS
         });
         */
         let headers = new HttpHeaders({
-            'Content-Type': 'application/json; charset=utf-8',
+            'Content-Type': 'application/json; charset=UTF-8',
         });
 
         if (this.authenticationService.isAuthenticated()) {

@@ -95,7 +95,7 @@ export abstract class BlibsTableService<T> {
         });
         */
         let headers = new HttpHeaders({
-            'Content-Type': 'application/json; charset=utf-8',
+            'Content-Type': 'application/json; charset=UTF-8',
         });
 
         if (this.authenticationService.isAuthenticated()) {
@@ -666,6 +666,36 @@ export abstract class BlibsTableService<T> {
             body: JSON.stringify(obj),
             headers: this.headers,
             responseType: 'json',
+            reportProgress: true
+        })
+            .pipe(retry(this.numberRetry),
+                catchError(err => {
+                    this._errorMessage.next(err);
+                    this.logger.error('Create https has error', err);
+                    return of({});
+                }),
+                finalize(() => this._isLoading$.next(false))
+            );
+    }
+
+    /**
+     * @param method - name method require
+     * @param obj - body request
+     * @apiNote - create http request to server api
+     */
+    ___createHttps(method: string): Observable<any> {
+        if (!this.HostAPIEndpoint) {
+            this.logger.error('Can not connect to HOST');
+            return;
+        }
+        this._isLoading$.next(true);
+        this._errorMessage.next('');
+        const url = this.HostAPIEndpoint.concat(this.relativeUrl);
+        return this.http.request(
+            method, url, {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json; charset=UTF-8'
+            }),
             reportProgress: true
         })
             .pipe(retry(this.numberRetry),
