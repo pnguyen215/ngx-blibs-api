@@ -693,9 +693,7 @@ export abstract class BlibsTableService<T> {
         const url = this.HostAPIEndpoint.concat(this.relativeUrl);
         return this.http.request(
             method, url, {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json; charset=UTF-8'
-            }),
+            headers: this.headers,
             reportProgress: true
         })
             .pipe(retry(this.numberRetry),
