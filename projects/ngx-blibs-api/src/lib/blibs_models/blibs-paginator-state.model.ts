@@ -1,4 +1,5 @@
-export const BlibsPageSizes = [3, 5, 10, 15, 50, 100];
+// export const BlibsPageSizes = [3, 5, 10, 15, 50, 100];
+export const BlibsPageSizes = [10, 25, 50, 100];
 
 export interface IBlibsPaginatorState {
     page: number;
@@ -9,7 +10,7 @@ export interface IBlibsPaginatorState {
 
 export class BlibsPaginatorState implements IBlibsPaginatorState {
     page = 1;
-    pageSize = BlibsPageSizes[2];
+    pageSize = BlibsPageSizes[0];
     total = 0;
     pageSizes: number[] = [];
 

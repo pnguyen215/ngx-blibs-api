@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BlibsDateNormalizeReqModel } from '../blibs_models/blibs-request.model';
 import { Logger } from './blibs-logger.service';
+import { formatDate } from '@angular/common';
 
 
 type Descripted<T> = {
@@ -419,6 +420,34 @@ export class BlibsBaseUtilsService {
     const monthEnd = new Date(date2UTC.getFullYear(), date2UTC.getMonth() + 1, 1);
     const monthLength = (monthEnd.getTime() - monthStart.getTime()) / (1000 * 60 * 60 * 24);
     return monthLength;
+  }
+
+  formatShapeTime(date: Date, format: string, locale?: string): string {
+
+    if (!format || !this.areNotNull(format)) {
+      format = 'yyyy-MM-dd HH:mm:ss';
+    }
+    return formatDate(date, format, locale);
+  }
+
+  formatManualShapeTime(date: Date, format: string): string {
+
+    if (!format || !this.areNotNull(format)) {
+      format = 'yyyy-MM-dd hh:ii:ss';
+    }
+
+    const sliceStart = (value: number): string => value.toString().padStart(2, '0');
+    return format
+      .replace(/yyyy/g, sliceStart(date.getFullYear()))
+      .replace(/dd/g, sliceStart(date.getDate()))
+      .replace(/mm/g, sliceStart(date.getMonth() + 1))
+      .replace(/hh/g, sliceStart(date.getHours()))
+      .replace(/ii/g, sliceStart(date.getMinutes()))
+      .replace(/ss/g, sliceStart(date.getSeconds()));
+  }
+
+  isValidDate(date: Date): boolean {
+    return !isNaN(date.getTime());
   }
 
 }
