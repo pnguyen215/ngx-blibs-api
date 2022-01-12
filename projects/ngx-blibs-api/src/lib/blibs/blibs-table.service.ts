@@ -88,12 +88,6 @@ export abstract class BlibsTableService<T> {
 
 
     protected get headers() {
-        // return new HttpHeaders({ 'Content-Type': 'application/json' });
-        /*
-        let headers = new HttpHeaders({
-            'Content-Type': 'application/json; charset=utf-8', Authorization: `Bearer ${this.authenticationService.getBlibsToken()}`,
-        });
-        */
         let headers = new HttpHeaders({
             'Content-Type': 'application/json; charset=UTF-8',
         });
@@ -214,8 +208,8 @@ export abstract class BlibsTableService<T> {
         );
     }
 
-    /*
-        findWiths(tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
+
+    findWiths(tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
             this.logger.error('Can not connect to HOST');
             return;
@@ -239,7 +233,7 @@ export abstract class BlibsTableService<T> {
             })
         );
     }
-    */
+
 
     findWithGet(tableState: IBlibsTableState): Observable<BlibsTableResponseModel<T>> {
         if (!this.HostAPIEndpoint) {
