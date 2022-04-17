@@ -7,11 +7,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:angular-sl": "ng build angularSL",
-    "build:lib": "ng-packagr -p projects/ngx-blibs-api/package.json",
-    "build:lib:native": "ng build ngx-blibs-api",
-    "export:lib": "npm run build:lib && cd dist/ngx-blibs-api && npm link && npm pack",
-    "package:lib": "cd dist/ngx-blibs-api && npm link && npm pack"
+    "build:ngx_blibs_api:lib": "ng-packagr -p projects/ngx-blibs-api/package.json",
+    "build:ngx_blibs_api:lib:native": "ng build ngx-blibs-api",
+    "package:ngx_blibs_api:lib": "npm run build:ngx_blibs_api:lib && cd dist/ngx-blibs-api && npm link && npm pack",
+    "build:ngx_api_sdk:lib": "ng-packagr -p projects/ngx-props-api/package.json",
+    "package:ngx_api_sdk:lib": "npm run build:ngx_api_sdk:lib && cd dist/@ngx-props-api/api-sdk && npm link && npm pack"
   },
   "private": true,
   "dependencies": {

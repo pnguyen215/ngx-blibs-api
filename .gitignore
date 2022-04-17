@@ -6,14 +6,12 @@
 /out-tsc
 /.firebase
 /.vscode
-/sivaos-ngx-blibs-api
 /libs
 # Only exists if Bazel was run
 /bazel-out
 
 # dependencies
 /node_modules
-package-lock.json
 
 # profiling files
 chrome-profiler-events*.json
@@ -49,3 +47,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# package-lock.json
+package-lock.json

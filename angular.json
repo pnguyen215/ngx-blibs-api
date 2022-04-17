@@ -257,6 +257,41 @@
           }
         }
       }
+    },
+    "ngx-props-api": {
+      "projectType": "library",
+      "root": "projects/ngx-props-api",
+      "sourceRoot": "projects/ngx-props-api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-props-api/tsconfig.lib.json",
+            "project": "projects/ngx-props-api/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-props-api/src/test.ts",
+            "tsConfig": "projects/ngx-props-api/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-props-api/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-props-api/tsconfig.lib.json",
+              "projects/ngx-props-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "createLib"

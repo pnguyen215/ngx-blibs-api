@@ -42,6 +42,12 @@
       ],
       "ngx-blibs-api/*": [
         "dist/ngx-blibs-api/*"
+      ],
+      "ngx-props-api": [
+        "dist/ngx-props-api"
+      ],
+      "ngx-props-api/*": [
+        "dist/ngx-props-api/*"
       ]
     }
   },

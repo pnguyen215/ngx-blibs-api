@@ -1,0 +1,37 @@
+{
+  "name": "ngx-api-sdk",
+  "version": "0.0.1",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pnguyen215/Ngx-Blibs-Api.git"
+  },
+  "description": "ngx-props-api support for api platform",
+  "keywords": [
+    "api",
+    "angular api",
+    "request",
+    "lib"
+  ],
+  "author": {
+    "name": "ArisNguyen",
+    "email": "nguyenhuuphuocit97@gmail.com"
+  },
+  "peerDependencies": {
+    "@angular/common": "^8.2.0",
+    "@angular/core": "^8.2.0",
+    "@angular/compiler": "^8.2.14",
+    "@angular/animations": "^8.2.14",
+    "@angular/forms": "^8.2.14",
+    "@angular/platform-browser": "^8.2.14",
+    "@angular/platform-browser-dynamic": "^8.2.14"
+  },
+  "dependencies": {},
+  "ngPackage": {
+    "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "../../dist/@ngx-props-api/api-sdk",
+    "lib": {
+      "entryFile": "src/public-api.ts"
+    }
+  }
+}
