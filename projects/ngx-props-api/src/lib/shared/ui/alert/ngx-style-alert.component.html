@@ -1,0 +1,22 @@
+<div class="jumbotron p-4">
+    <div class="container text-rigth">
+
+        <head>
+            <link href="//netdna.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+            <script src="https://code.jquery.com/jquery.js"></script>
+        </head>
+
+        <div style="position: positive; display: inline; top:0; margin-right: 5px">
+            <div *ngFor="let alert of alerts" class="{{cssClass(alert)}}" style="height: auto">
+                <a class="close ml-3" (click)="removeAlert(alert)">&times;</a>
+                <p style="text-align: right;" class="mr-2">
+                    {{alert.title}}
+                </p>
+                <hr>
+                <span [innerHTML]="alert.message"></span>
+            </div>
+        </div>
+
+    </div>
+</div>

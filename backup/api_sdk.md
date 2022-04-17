@@ -49,3 +49,12 @@ export * from './lib/services/ngx-toaster-builder.service';
 export * from './lib/services/ngx-toaster.service';
 export * from './lib/services/handler/ngx-toaster-handler.service';
 ```
+
+> interceptors
+
+```typescript
+// export * from './lib/configs/middleware/index';
+export * from './lib/configs/middleware/ngx-request-cache.interceptor';
+export * from './lib/configs/middleware/ngx-request-retry.interceptor';
+export * from './lib/configs/middleware/ngx-request-stick.interceptor';
+```

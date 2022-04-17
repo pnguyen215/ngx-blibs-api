@@ -1,0 +1,4 @@
+<div id="toast" *ngIf="toasterService.visible | async">
+    {{ toasterService.message | async }}<br>
+    <a id="hide" (click)="toasterService.hide()">Close</a>
+</div>
