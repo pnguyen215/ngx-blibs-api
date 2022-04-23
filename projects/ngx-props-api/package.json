@@ -1,10 +1,10 @@
 {
   "name": "ngx-api-sdk",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pnguyen215/Ngx-Blibs-Api.git"
+    "url": "git+https://github.com/pnguyen215/ngx-blibs-api.git"
   },
   "description": "ngx-props-api support for api platform",
   "keywords": [

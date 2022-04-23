@@ -48,6 +48,12 @@
       ],
       "ngx-props-api/*": [
         "dist/ngx-props-api/*"
+      ],
+      "ngx-props-vendors": [
+        "dist/ngx-props-vendors"
+      ],
+      "ngx-props-vendors/*": [
+        "dist/ngx-props-vendors/*"
       ]
     }
   },

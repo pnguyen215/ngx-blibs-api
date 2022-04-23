@@ -4,10 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxPropsApiComponent } from './ngx-props-api.component';
 import { NgxPropsApiService } from './ngx-props-api.service';
+import { NgxAuthorizationHandlerService } from './services/handler/ngx-authorization-handler.service';
 import { NgxCacheHandlerService } from './services/handler/ngx-cache-handler.service';
 import { NgxToasterHandlerService } from './services/handler/ngx-toaster-handler.service';
 import { NgxAlertService } from './services/ngx-alert.service';
+import { NgxAuthorizationService } from './services/ngx-authorization.service';
 import { NgxCacheService } from './services/ngx-cache.service';
+import { NgxCollectionsService } from './services/ngx-collections.service';
 import { NgxRequestStickService } from './services/ngx-request-stick.service';
 import { NgxStoragesService } from './services/ngx-storages.service';
 import { NgxToasterBuilderService } from './services/ngx-toaster-builder.service';
@@ -51,6 +54,7 @@ export class NgxPropsApiModule {
         NgxStoragesService,
         NgxRequestStickService,
         NgxToasterBuilderService,
+        NgxCollectionsService,
         {
           provide: NgxCacheService,
           useClass: NgxCacheHandlerService
@@ -58,6 +62,10 @@ export class NgxPropsApiModule {
         {
           provide: NgxToasterService,
           useClass: NgxToasterHandlerService
+        },
+        {
+          provide: NgxAuthorizationService,
+          useClass: NgxAuthorizationHandlerService
         }
       ]
     };

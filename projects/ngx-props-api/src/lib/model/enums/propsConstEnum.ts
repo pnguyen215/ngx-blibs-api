@@ -43,3 +43,21 @@ export const SysRequestApi = {
     REQUEST_ENABLED_RETRY_TIMES: false
 };
 
+
+export const SysPropsMessage = {
+
+    FROM_SERVER: 'from_server',
+    FROM_CLIENT: 'from_client'
+};
+
+
+export enum SysHttpMethods {
+
+    GET = 'get',
+    POST = 'post',
+    PUT = 'put',
+    DELETE = 'delete',
+    OPTIONS = 'options',
+    PATCH = 'patch'
+};
+
