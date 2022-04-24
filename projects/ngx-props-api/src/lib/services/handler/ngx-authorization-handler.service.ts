@@ -35,7 +35,7 @@ export class NgxAuthorizationHandlerService implements NgxAuthorizationService {
     this.currentUserSubject.next(user);
   }
 
-  setUserDetails(key: string, user: PropsUserRes): boolean {
+  setUserDetails(key: string, user: any): boolean {
 
     if (!allNotNull(key, user)) {
       return false;

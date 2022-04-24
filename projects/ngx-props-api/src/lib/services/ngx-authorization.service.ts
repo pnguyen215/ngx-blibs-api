@@ -12,7 +12,7 @@ export abstract class NgxAuthorizationService {
 
   abstract logout(redirectToUrl: string): void;
 
-  abstract setUserDetails(key: string, user: PropsUserRes): boolean;
+  abstract setUserDetails(key: string, user: any): boolean;
 
   abstract getUserDetails(key: string): PropsUserRes;
 
