@@ -8,7 +8,7 @@ export * from './lib/ngx-props-api.component';
 export * from './lib/ngx-props-api.module';
 
 // interceptors
-export * from './lib/configs/middleware/index';
+export * from './lib/configs/middleware/services/index';
 
 // utils
 export * from './lib/utils/propsObjectUtils';
@@ -36,6 +36,8 @@ export * from './lib/services/ngx-collections.service';
 export * from './lib/services/ngx-authorization.service';
 export * from './lib/services/handler/ngx-authorization-handler.service';
 export * from './lib/services/ngx-records-ops.service';
+export * from './lib/services/ngx-errors.service';
+export * from './lib/services/handler/ngx-errors-handler.service';
 
 // models:base
 export { PropsPrototypes } from './lib/model/base/props-prototypes.model';

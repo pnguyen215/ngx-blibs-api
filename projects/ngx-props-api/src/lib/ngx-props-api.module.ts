@@ -6,11 +6,13 @@ import { NgxPropsApiComponent } from './ngx-props-api.component';
 import { NgxPropsApiService } from './ngx-props-api.service';
 import { NgxAuthorizationHandlerService } from './services/handler/ngx-authorization-handler.service';
 import { NgxCacheHandlerService } from './services/handler/ngx-cache-handler.service';
+import { NgxErrorsHandlerService } from './services/handler/ngx-errors-handler.service';
 import { NgxToasterHandlerService } from './services/handler/ngx-toaster-handler.service';
 import { NgxAlertService } from './services/ngx-alert.service';
 import { NgxAuthorizationService } from './services/ngx-authorization.service';
 import { NgxCacheService } from './services/ngx-cache.service';
 import { NgxCollectionsService } from './services/ngx-collections.service';
+import { NgxErrorsService } from './services/ngx-errors.service';
 import { NgxRequestStickService } from './services/ngx-request-stick.service';
 import { NgxStoragesService } from './services/ngx-storages.service';
 import { NgxToasterBuilderService } from './services/ngx-toaster-builder.service';
@@ -66,6 +68,10 @@ export class NgxPropsApiModule {
         {
           provide: NgxAuthorizationService,
           useClass: NgxAuthorizationHandlerService
+        },
+        {
+          provide: NgxErrorsService,
+          useClass: NgxErrorsHandlerService
         }
       ]
     };

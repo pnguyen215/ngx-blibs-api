@@ -110,27 +110,35 @@ export abstract class NgxRecordsOpsService<T> {
 
   protected handleError(e: any) {
 
-    if (e.error instanceof ErrorEvent) {
-
-      this.recordsEOFPrototypesDefault = {
-        ...this.recordsEOFPrototypesDefault,
-        message: e.error.message,
-        debugMsg: e.error.message,
-        fromSide: SysConst.SysPropsMessage.FROM_CLIENT
-      };
-
-    }
-
     if (e instanceof HttpErrorResponse) {
 
+      if (e.error instanceof ErrorEvent) {
+
+        this.recordsEOFPrototypesDefault = {
+          ...this.recordsEOFPrototypesDefault,
+          message: e.error.message ? e.error.message : e.message,
+          debugMsg: e.error.message ? e.error.message : e.message,
+          fromSide: SysConst.SysPropsMessage.FROM_CLIENT
+        };
+
+      } else {
+        this.recordsEOFPrototypesDefault = {
+          ...this.recordsEOFPrototypesDefault,
+          message: e.message,
+          code: e.status,
+          debugMsg: e.error.debugMsg ? e.error.debugMsg : 'error unknown',
+          fromSide: SysConst.SysPropsMessage.FROM_SERVER
+        };
+      }
+
+    } else {
       this.recordsEOFPrototypesDefault = {
         ...this.recordsEOFPrototypesDefault,
-        message: e.message,
-        code: e.status,
-        debugMsg: e.error.debugMsg,
-        fromSide: SysConst.SysPropsMessage.FROM_SERVER
+        message: e.error.message ? e.error.message : e.message,
+        debugMsg: e.error.message ? e.error.message : e.message,
+        messageErrorEvent: e,
+        fromSide: SysConst.SysPropsMessage.FROM_UNKNOWN
       };
-
     }
 
     this.logger.error('handleError($e)', 'Source of reason = ', this.recordsEOFPrototypesDefault.fromSide);

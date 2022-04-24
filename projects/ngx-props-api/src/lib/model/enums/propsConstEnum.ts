@@ -47,7 +47,8 @@ export const SysRequestApi = {
 export const SysPropsMessage = {
 
     FROM_SERVER: 'from_server',
-    FROM_CLIENT: 'from_client'
+    FROM_CLIENT: 'from_client',
+    FROM_UNKNOWN: 'from_unknown'
 };
 
 
