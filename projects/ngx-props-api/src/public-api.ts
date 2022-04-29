@@ -18,6 +18,7 @@ export * from './lib/utils/propsValidatorUtils';
 export * from './lib/utils/propsNmUtils';
 export * from './lib/utils/propsLoggerUtils';
 export * from './lib/utils/propsRecordUtils';
+export { DateUtils } from './lib/utils/propsDateUtils';
 
 
 // enums
@@ -38,6 +39,9 @@ export * from './lib/services/handler/ngx-authorization-handler.service';
 export * from './lib/services/ngx-records-ops.service';
 export * from './lib/services/ngx-errors.service';
 export * from './lib/services/handler/ngx-errors-handler.service';
+export * from './lib/services/ngx-date-time.service';
+export * from './lib/services/handler/ngx-date-time-handler.service';
+
 
 // models:base
 export { PropsPrototypes } from './lib/model/base/props-prototypes.model';
