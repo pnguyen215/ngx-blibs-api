@@ -20,4 +20,5 @@ export abstract class NgxAuthorizationService {
 
   abstract isVerifyTokenExpired(key: string): boolean;
 
+  abstract isVerifyTokenExpiredWith(token: string): boolean;
 }

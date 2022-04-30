@@ -10,7 +10,7 @@ import { NgxStoragesService } from '../ngx-storages.service';
 @Injectable()
 export class NgxAuthorizationHandlerService implements NgxAuthorizationService {
 
-  logger = new Logger(NgxAuthorizationHandlerService.name);
+  protected logger = new Logger(NgxAuthorizationHandlerService.name);
 
   currentUser$: Observable<PropsUserRes>;
   isLoading$: Observable<boolean>;
@@ -106,6 +106,23 @@ export class NgxAuthorizationHandlerService implements NgxAuthorizationService {
       'currentTime = ', currentTime,
       ', expiredTime = ', expiredTime,
       ', isVerifyTokenExpired($):on result = ', currentTime >= expiredTime);
+
+    return currentTime >= expiredTime;
+  }
+
+  isVerifyTokenExpiredWith(token: string): boolean {
+
+    if (!allNotNull(token)) {
+      return true;
+    }
+
+    const currentTime = Math.floor((new Date()).getTime() / 1000);
+    const expiredTime = (JSON.parse(atob(token.split('.')[1]))).exp;
+
+    this.logger.warn(
+      'currentTime = ', currentTime,
+      ', expiredTime = ', expiredTime,
+      ', isVerifyTokenExpiredWith($):on result = ', currentTime >= expiredTime);
 
     return currentTime >= expiredTime;
   }

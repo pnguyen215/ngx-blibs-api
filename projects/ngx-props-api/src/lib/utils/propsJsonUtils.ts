@@ -1,12 +1,12 @@
 import { allNotNull } from './propsObjectUtils';
 
-export function fromObsToJson(value: any): any {
+export function fromJsonTo(json: string): any {
 
-    if (!allNotNull(value)) {
-        return '';
+    if (!allNotNull(json)) {
+        return json;
     }
 
-    return JSON.parse(value);
+    return JSON.parse(json);
 }
 
 export function toJsonDefault(value: any): string {

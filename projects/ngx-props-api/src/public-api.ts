@@ -41,6 +41,12 @@ export * from './lib/services/ngx-errors.service';
 export * from './lib/services/handler/ngx-errors-handler.service';
 export * from './lib/services/ngx-date-time.service';
 export * from './lib/services/handler/ngx-date-time-handler.service';
+export * from './lib/services/ngx-websocket-io-base.service';
+export * from './lib/services/handler/ngx-websocket-io-base-handler.service';
+export * from './lib/services/ngx-socket-io.service';
+export * from './lib/services/ngx-anonymous-socket-io-service.service';
+export * from './lib/services/ngx-anonymous-websocket-io-base.service';
+export * from './lib/services/handler/ngx-anonymous-websocket-io-base-handler.service';
 
 
 // models:base

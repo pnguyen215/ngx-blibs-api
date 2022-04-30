@@ -7,7 +7,7 @@ export interface PropsRecordPrototypes<T> {
     status?: string;
     code?: number;
     publish?: Date;
-    items: T[];
+    items?: T[];
     data?: PropsPagePrototypes<T> | T;
     total?: number;
     gwt?: Date;
