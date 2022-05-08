@@ -13,5 +13,5 @@ export const NgxServiceInterceptorProviders = [
     { provide: HTTP_INTERCEPTORS, useClass: NgxRequestRetryInterceptorService, multi: true }, // from retry request
     { provide: HTTP_INTERCEPTORS, useClass: NgxRequestStickInterceptorService, multi: true }, // from logging request
     { provide: HTTP_INTERCEPTORS, useClass: NgxRequestErrorsInterceptorService, multi: true }, // from error http request
-    { provide: ErrorHandler, useClass: NgxRequestGlobalErrorsInterceptorService }
+    // { provide: ErrorHandler, useClass: NgxRequestGlobalErrorsInterceptorService }
 ];
