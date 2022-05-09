@@ -275,7 +275,7 @@ export class NgxDateTimeHandlerService implements NgxDateTimeService {
 
   humanFriendlyDate(date: Date): string {
 
-    this.logger.warn('humanFriendlyDate($date), date = ', DateUtils.formatToIso(date));
+    // this.logger.warn('humanFriendlyDate($date), date = ', DateUtils.formatToIso(date));
 
     const unixTimestamp: number = this.millisecondsToSeconds(date.valueOf());
 

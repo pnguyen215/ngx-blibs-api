@@ -19,10 +19,10 @@ export class NgxRequestGlobalErrorsInterceptorService implements ErrorHandler {
 
     if (e instanceof HttpErrorResponse) {
       this.recordsEOFPrototypesDefault = this.errorsService.handleHttpErrorEvent(e);
-      this.logger.warn('You got handleError($e) is HttpErrorResponse');
+      this.logger.error('You got handleError($e) is HttpErrorResponse');
     } else {
       this.recordsEOFPrototypesDefault = this.errorsService.handleErrorEventUnknown(e);
-      this.logger.warn('You got handleError($e) is unknown response');
+      this.logger.error('You got handleError($e) is unknown response');
     }
 
     this.logger.error('handleError($e) is: ', toJson(this.recordsEOFPrototypesDefault));

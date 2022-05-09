@@ -47,6 +47,7 @@ export * from './lib/services/ngx-socket-io.service';
 export * from './lib/services/ngx-anonymous-socket-io-service.service';
 export * from './lib/services/ngx-anonymous-websocket-io-base.service';
 export * from './lib/services/handler/ngx-anonymous-websocket-io-base-handler.service';
+export * from './lib/services/ngx-loader.service';
 
 
 // models:base

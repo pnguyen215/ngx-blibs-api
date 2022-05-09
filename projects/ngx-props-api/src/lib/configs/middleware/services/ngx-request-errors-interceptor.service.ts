@@ -41,6 +41,9 @@ export class NgxRequestErrorsInterceptorService implements HttpInterceptor {
           this.recordsEOFPrototypesDefault = this.errorsService.handleHttpErrorEvent(error);
           this.logger.warn('--> NgxRequestErrorsInterceptorService()', 'overcome HttpErrorResponse firewall [1]');
 
+          return throwError(this.recordsEOFPrototypesDefault);
+
+          /*
           if (error.error instanceof ErrorEvent) {
 
             this.logger.warn('--> NgxRequestErrorsInterceptorService()', 'overcome ErrorEvent firewall [2]');
@@ -54,9 +57,11 @@ export class NgxRequestErrorsInterceptorService implements HttpInterceptor {
             handleOthers = true;
 
           }
+          */
 
         } else {
 
+          handleOthers = true;
           this.logger.warn('--> NgxRequestErrorsInterceptorService()', 'overcome Not HttpErrorResponse firewall [4]');
           this.recordsEOFPrototypesDefault = this.errorsService.handleErrorEventUnknown(error);
 
@@ -65,17 +70,17 @@ export class NgxRequestErrorsInterceptorService implements HttpInterceptor {
         if (handleOthers) {
 
           this.logger.warn('--> NgxRequestErrorsInterceptorService()', 'overcome Not ErrorEvent firewall [5]');
-          return of(this.recordsEOFPrototypesDefault);
+          return throwError(this.recordsEOFPrototypesDefault);
 
         } else {
 
           this.logger.warn('--> NgxRequestErrorsInterceptorService()', 'overcome Unknown (HttpErrorResponse & ErrorEvent)  firewall [6]');
-          return of(error);
+          return throwError(error);
 
         }
 
         // return of(error);
-        return throwError(error);
+        // return throwError(error);
       })
     );
 

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PropsRecordPrototypes, RecordsEOFPrototypesDefault } from '../../model/base/props-record-prototypes.model';
 import { SysPropsMessage } from '../../model/enums/propsConstEnum';
+import { toJson } from '../../utils/propsJsonUtils';
 import { Logger } from '../../utils/propsLoggerUtils';
 import { NgxErrorsService } from '../ngx-errors.service';
 
@@ -23,10 +24,13 @@ export class NgxErrorsHandlerService implements NgxErrorsService {
 
     this.logger.error('handleErrorEvent($e)',
       'Source of reason = ',
-      this.recordsEOFPrototypesDefault.fromSide);
+      this.recordsEOFPrototypesDefault.fromSide,
+      ', response = ',
+      toJson(this.recordsEOFPrototypesDefault));
 
     return this.recordsEOFPrototypesDefault;
   }
+
 
   handleHttpErrorEvent(e: HttpErrorResponse): PropsRecordPrototypes<any> {
 
@@ -40,7 +44,9 @@ export class NgxErrorsHandlerService implements NgxErrorsService {
 
     this.logger.error('handleHttpErrorEvent($e)',
       'Source of reason = ',
-      this.recordsEOFPrototypesDefault.fromSide);
+      this.recordsEOFPrototypesDefault.fromSide,
+      ', response = ',
+      toJson(this.recordsEOFPrototypesDefault));
 
     return this.recordsEOFPrototypesDefault;
   }
@@ -58,7 +64,9 @@ export class NgxErrorsHandlerService implements NgxErrorsService {
 
     this.logger.error('handleErrorEventUnknown($e)',
       'Source of reason = ',
-      this.recordsEOFPrototypesDefault.fromSide);
+      this.recordsEOFPrototypesDefault.fromSide,
+      ', response = ',
+      toJson(this.recordsEOFPrototypesDefault));
 
     return this.recordsEOFPrototypesDefault;
   }
