@@ -54,6 +54,9 @@ export abstract class NgxRecordsOpsService<T> {
   // tslint:disable-next-line: variable-name
   private _subscriptions: Subscription[] = [];
 
+  // begin::Error flag request
+  private isErrorOccurred = false;
+
 
   constructor(
     http: HttpClient
@@ -96,7 +99,12 @@ export abstract class NgxRecordsOpsService<T> {
     return this._tableState$.value.grouping;
   }
 
+  get isErrors(): boolean {
+    return this.isErrorOccurred;
+  }
+
   protected get headers() {
+    // tslint:disable-next-line: prefer-const
     let headers = new HttpHeaders({
       'Content-Type': 'application/json; charset=UTF-8',
     });
@@ -180,6 +188,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -187,6 +196,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -201,6 +211,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -208,6 +219,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -222,6 +234,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -229,6 +242,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -243,6 +257,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -250,6 +265,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -264,6 +280,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -271,6 +288,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -286,6 +304,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -293,6 +312,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -307,6 +327,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -314,6 +335,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -328,6 +350,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -335,6 +358,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -349,6 +373,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -356,6 +381,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -370,6 +396,7 @@ export abstract class NgxRecordsOpsService<T> {
 
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -377,6 +404,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -391,6 +419,7 @@ export abstract class NgxRecordsOpsService<T> {
     this.logger.info('onRequest(method) = ', SysHttpMethods[method]);
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -403,6 +432,7 @@ export abstract class NgxRecordsOpsService<T> {
       reportProgress: true
     }).pipe(retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -416,6 +446,7 @@ export abstract class NgxRecordsOpsService<T> {
     this.logger.info('onRequestAny(method) = ', SysHttpMethods[method]);
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -428,6 +459,7 @@ export abstract class NgxRecordsOpsService<T> {
       reportProgress: true
     }).pipe(retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -441,6 +473,7 @@ export abstract class NgxRecordsOpsService<T> {
     this.logger.info('onUploadParts(method) = ', SysHttpMethods[method]);
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -456,6 +489,7 @@ export abstract class NgxRecordsOpsService<T> {
     return this.http.request(request).pipe(
       retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -468,6 +502,7 @@ export abstract class NgxRecordsOpsService<T> {
   onDownloadGetBlob(): Observable<any> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -478,6 +513,7 @@ export abstract class NgxRecordsOpsService<T> {
     }).pipe(
       retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -491,6 +527,7 @@ export abstract class NgxRecordsOpsService<T> {
   onDownloadPostBlob(body: any): Observable<any> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -501,6 +538,7 @@ export abstract class NgxRecordsOpsService<T> {
     }).pipe(
       retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -514,6 +552,7 @@ export abstract class NgxRecordsOpsService<T> {
   onDownloadGetDocs(): Observable<any> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -524,6 +563,7 @@ export abstract class NgxRecordsOpsService<T> {
     }).pipe(
       retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -537,6 +577,7 @@ export abstract class NgxRecordsOpsService<T> {
   onDownloadPostDocs(body: any): Observable<any> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -547,6 +588,7 @@ export abstract class NgxRecordsOpsService<T> {
     }).pipe(
       retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -600,6 +642,7 @@ export abstract class NgxRecordsOpsService<T> {
   onDownloadGetCsv(): Observable<any> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -610,6 +653,7 @@ export abstract class NgxRecordsOpsService<T> {
     }).pipe(
       retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -623,6 +667,7 @@ export abstract class NgxRecordsOpsService<T> {
   onDownloadPostCsv(body: any): Observable<any> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -633,6 +678,7 @@ export abstract class NgxRecordsOpsService<T> {
     }).pipe(
       retry(this.requestRetryTimes),
       catchError(e => {
+        this.isErrorOccurred = true;
         this._errorMessage.next(e);
         this.handleError(e);
         return of(this.recordsEOFPrototypesDefault);
@@ -652,6 +698,7 @@ export abstract class NgxRecordsOpsService<T> {
   onGetRecordsState(recordsState: IRecordsState): Observable<PropsRecordPrototypes<T>> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -659,6 +706,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -672,6 +720,7 @@ export abstract class NgxRecordsOpsService<T> {
   onPostRecordsState(recordsState: IRecordsState): Observable<PropsRecordPrototypes<T>> {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const url = this.requestUrl();
 
@@ -679,6 +728,7 @@ export abstract class NgxRecordsOpsService<T> {
       { headers: this.headers, params: this.requestRecordsConfig.params }).pipe(
         retry(this.requestRetryTimes),
         catchError(e => {
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -692,6 +742,7 @@ export abstract class NgxRecordsOpsService<T> {
   public onFetchGet() {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const request = this.onGetRecordsState(this._tableState$.value)
       .pipe(
@@ -706,7 +757,7 @@ export abstract class NgxRecordsOpsService<T> {
 
         }),
         catchError((e) => {
-
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
@@ -733,6 +784,7 @@ export abstract class NgxRecordsOpsService<T> {
   public onFetchPost() {
     this._isLoading$.next(true);
     this._errorMessage.next('');
+    this.isErrorOccurred = false;
 
     const request = this.onPostRecordsState(this._tableState$.value)
       .pipe(
@@ -747,7 +799,7 @@ export abstract class NgxRecordsOpsService<T> {
 
         }),
         catchError((e) => {
-
+          this.isErrorOccurred = true;
           this._errorMessage.next(e);
           this.handleError(e);
           return of(this.recordsEOFPrototypesDefault);
