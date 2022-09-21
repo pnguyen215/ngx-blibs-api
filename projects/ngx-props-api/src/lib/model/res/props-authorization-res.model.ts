@@ -10,5 +10,4 @@ export interface PropsAuthorizationRes extends PropsPrototypes {
     code?: number;
     status?: string;
     scopes?: string[];
-
 }

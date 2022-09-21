@@ -1,3 +1,4 @@
+import { toJson } from './propsJsonUtils';
 
 export function allNotNull(...values: any): boolean {
 
@@ -47,5 +48,30 @@ export function feedInfoUrl(url: string): Map<any, any> {
 
 }
 
+export function isEmptyMap(map: Map<any, any>): boolean {
+    return map.size === 0;
+}
 
+export function isNotEmptyMap(map: Map<any, any>): boolean {
+    return !isEmptyMap(map);
+}
+
+export function isEmptySet(set: Set<any>): boolean {
+    return set.size === 0;
+}
+
+export function isNotEmptySet(set: Set<any>): boolean {
+    return !isEmptySet(set);
+}
+
+export function asIterateMap(map: Map<any, any>): void {
+
+    if (isEmptyMap(map)) {
+        return;
+    }
+
+    map.forEach((key, value) => {
+        console.log(`Key = ${key}, value = ${toJson(value)}`);
+    });
+}
 

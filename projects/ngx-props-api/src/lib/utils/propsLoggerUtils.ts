@@ -30,7 +30,7 @@
  * If you want to process logs through other outputs than console, you can add LogOutput functions to Logger.outputs.
  */
 
-import { DateUtils } from "./propsDateUtils";
+import { DateUtils } from './propsDateUtils';
 
 /**
  * The possible log levels.

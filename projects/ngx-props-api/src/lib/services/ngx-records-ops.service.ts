@@ -25,6 +25,7 @@ import {
   HttpParams,
   HttpRequest
 } from '@angular/common/http';
+import { asIterateMap, isNotEmptyMap } from '../utils/propsObjectUtils';
 
 
 
@@ -35,6 +36,10 @@ export abstract class NgxRecordsOpsService<T> {
   protected requestRecordsConfig: IRequestRecordsDefault = RequestRecordsDefault;
   protected recordsEOFPrototypesDefault: PropsRecordPrototypes<any> = RecordsEOFPrototypesDefault;
   protected http: HttpClient;
+  protected asHeader = new HttpHeaders({
+    'Content-Type': 'application/json; charset=UTF-8',
+  });
+  protected asQueriesString = new Map<string, any>();
 
   // tslint:disable-next-line: variable-name
   private _items$ = new BehaviorSubject<T[]>([]);
@@ -104,12 +109,7 @@ export abstract class NgxRecordsOpsService<T> {
   }
 
   protected get headers() {
-    // tslint:disable-next-line: prefer-const
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=UTF-8',
-    });
-
-    return headers;
+    return this.asHeader;
   }
 
   protected requestUrl(): string {
@@ -149,9 +149,8 @@ export abstract class NgxRecordsOpsService<T> {
       };
     }
 
-    this.logger.error('handleError($e)', 'Source of reason = ', this.recordsEOFPrototypesDefault.fromSide);
-    this.logger.error(e);
-
+    this.logger.error('handleError($e)', 'an_error_by_side = ', this.recordsEOFPrototypesDefault.fromSide);
+    this.logger.error('handleError($e), an_error_occurred = ', e);
   }
 
   setHost(host: string) {
@@ -166,23 +165,70 @@ export abstract class NgxRecordsOpsService<T> {
     this.requestRecordsConfig = { ...this.requestRecordsConfig, params };
   }
 
-  setRequestRetryTimes(numberRetry: number) {
+  addParam(key: string, value: string) {
+    let params = this.requestRecordsConfig.params ? this.requestRecordsConfig.params : new HttpParams();
+    params = params.append(key, value);
+    this.setParams(params);
+  }
+
+  setRequestRetryTimes(numberRetry: number = 2) {
     this.requestRetryTimes = numberRetry ?
       numberRetry : SysConst.SysRequestApi.REQUEST_RETRY_TIMES;
   }
 
+  addHeader(key: string, value: string) {
+    this.asHeader.append(key, value);
+  }
+
+  setHeader(header: HttpHeaders) {
+    this.asHeader = header;
+  }
+
+  resetHeader() {
+    this.asHeader = null;
+  }
+
+  addQueryString(key: string, value: any) {
+    this.asQueriesString.set(key, value);
+    this.addParam(key, String(value));
+  }
+
+  setQueriesString(queryString: Map<string, any>) {
+    if (isNotEmptyMap(queryString)) {
+      queryString.forEach((key, value) => {
+        this.addQueryString(key, value);
+      });
+    }
+  }
+
+  resetQueryString() {
+    this.asQueriesString = null;
+    this.setParams(null);
+  }
+
   tailRequestRecordsConfig() {
-    this.logger.warn('tailRequestRecordsConfig() = ', toJson(this.requestRecordsConfig));
+    this.logger.warn('request_records_config = ', toJson(this.requestRecordsConfig));
   }
 
   tailRecordsEOF() {
-    this.logger.warn('tailRecordsEOF() = ', toJson(this.recordsEOFPrototypesDefault));
+    this.logger.warn('records_eof = ', toJson(this.recordsEOFPrototypesDefault));
   }
 
   tailRequestRetryTimes() {
-    this.logger.warn('tailRequestRetryTimes() = ', toJson(this.requestRetryTimes));
+    this.logger.warn('request_retry_times = ', toJson(this.requestRetryTimes));
   }
 
+  tailHeaders() {
+    this.logger.info('as_headers_info = ', toJson(this.asHeader));
+  }
+
+  tailParams() {
+    this.logger.info('as_params_info = ', toJson(this.requestRecordsConfig.params));
+  }
+
+  tailQueryString() {
+    asIterateMap(this.asQueriesString);
+  }
 
   onGet(): Observable<PropsRecordPrototypes<T>> {
 

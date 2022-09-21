@@ -15,6 +15,7 @@ export interface PropsRecordPrototypes<T> {
     debugMsg?: string;
     fromSide?: any;
     messageErrorEvent?: any;
+    [key: string]: any;
 }
 
 

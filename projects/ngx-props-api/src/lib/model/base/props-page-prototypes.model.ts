@@ -8,5 +8,6 @@ export interface PropsPagePrototypes<T> {
     currentPage?: number;
     totalNumberOfElements?: number;
     pageContents?: T[];
-    contents?: T[]
+    contents?: T[];
+    [key: string]: any;
 }

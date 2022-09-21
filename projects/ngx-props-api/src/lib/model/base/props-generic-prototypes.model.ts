@@ -3,6 +3,7 @@ import { GroupStatePrototypes } from './props-group-state-prototypes.model';
 import { PaginatorStatePrototypes } from './props-paginator-state-prototypes.model';
 import { SortStatePrototypes } from './props-sort-state-prototypes.model';
 
+// tslint:disable-next-line: no-empty-interface
 export interface PropsGenericPrototypes {
 }
 
@@ -35,7 +36,7 @@ export const RequestRecordsDefault: IRequestRecordsDefault = {
     host: 'http://localhost:8080',
     prefixApi: '/api/v1/hook',
     params: undefined,
-}
+};
 
 export interface IPropsCreateAction {
     create(): void;

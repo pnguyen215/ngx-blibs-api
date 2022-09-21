@@ -12,4 +12,5 @@ export interface PropsPrototypes {
     organizationId?: number;
     _id?: any;
     __v?: any;
+    [key: string]: any;
 }
