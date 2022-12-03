@@ -1,27 +1,19 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { NgxCookieService } from '../ngx-cookie.service';
-
-export type SameSite = 'Lax' | 'None' | 'Strict';
-
-export interface CookieOptions {
-  expires?: number | Date;
-  path?: string;
-  domain?: string;
-  secure?: boolean;
-  sameSite?: SameSite;
-}
+import { CookieOptions, NgxCookieService, SameSite } from '../ngx-cookie.service';
 
 @Injectable()
 export class NgxCookieHandlerService implements NgxCookieService {
 
   private readonly documentIsAccessible: boolean;
+  // tslint:disable-next-line: variable-name
+  private _document?: Document;
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
-    // Get the `PLATFORM_ID` so we can check if we're in a browser.
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(DOCUMENT) private document: any,
+    @Inject(PLATFORM_ID) private platformId: any
   ) {
+    this._document = document as Document;
     this.documentIsAccessible = isPlatformBrowser(this.platformId);
   }
 
@@ -66,7 +58,7 @@ export class NgxCookieHandlerService implements NgxCookieService {
     }
     name = encodeURIComponent(name);
     const regExp: RegExp = NgxCookieHandlerService.getCookieRegExp(name);
-    return regExp.test(this.document.cookie);
+    return regExp.test(this._document.cookie);
   }
 
   /**
@@ -81,7 +73,7 @@ export class NgxCookieHandlerService implements NgxCookieService {
       name = encodeURIComponent(name);
 
       const regExp: RegExp = NgxCookieHandlerService.getCookieRegExp(name);
-      const result: RegExpExecArray = regExp.exec(this.document.cookie);
+      const result: RegExpExecArray = regExp.exec(this._document.cookie);
 
       return result[1] ? NgxCookieHandlerService.safeDecodeURIComponent(result[1]) : '';
     } else {
@@ -101,7 +93,7 @@ export class NgxCookieHandlerService implements NgxCookieService {
     }
 
     const cookies: { [key: string]: string } = {};
-    const document: any = this.document;
+    const document: any = this._document;
 
     if (document.cookie && document.cookie !== '') {
       document.cookie.split(';').forEach((currentCookie) => {
@@ -219,7 +211,7 @@ export class NgxCookieHandlerService implements NgxCookieService {
 
     cookieString += 'sameSite=' + options.sameSite + ';';
 
-    this.document.cookie = cookieString;
+    this._document.cookie = cookieString;
   }
 
   /**

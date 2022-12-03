@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
-import { CookieOptions, SameSite } from './handler/ngx-cookie-handler.service';
+
+export type SameSite = 'Lax' | 'None' | 'Strict';
+
+export interface CookieOptions {
+  expires?: number | Date;
+  path?: string;
+  domain?: string;
+  secure?: boolean;
+  sameSite?: SameSite;
+}
 
 @Injectable({
   providedIn: 'root'

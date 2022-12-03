@@ -1,0 +1,1 @@
+npm run package:ngx_api_sdk:lib
