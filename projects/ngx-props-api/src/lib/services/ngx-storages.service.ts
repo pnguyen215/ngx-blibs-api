@@ -76,4 +76,9 @@ export class NgxStoragesService {
     return false;
   }
 
+  hasKey(key: string): boolean {
+    const value: any = this.get(key);
+    return allNotNull(value);
+  }
+
 }

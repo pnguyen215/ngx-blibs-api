@@ -48,6 +48,8 @@ export * from './lib/services/ngx-anonymous-socket-io-service.service';
 export * from './lib/services/ngx-anonymous-websocket-io-base.service';
 export * from './lib/services/handler/ngx-anonymous-websocket-io-base-handler.service';
 export * from './lib/services/ngx-loader.service';
+export * from './lib/services/ngx-cookie.service';
+export * from './lib/services/handler/ngx-cookie-handler.service';
 
 
 // models:base
