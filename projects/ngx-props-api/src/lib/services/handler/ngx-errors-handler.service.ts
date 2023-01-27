@@ -56,8 +56,10 @@ export class NgxErrorsHandlerService implements NgxErrorsService {
 
     this.recordsEOFPrototypesDefault = {
       ...this.recordsEOFPrototypesDefault,
-      message: e.error.message ? e.error.message : e.message,
-      debugMsg: e.error.message ? e.error.message : e.message,
+      // message: e.error?.message ? e.error.message : e.message,
+      // debugMsg: e.error?.message ? e.error.message : e.message,
+      message: e.message,
+      debugMsg: e.message,
       messageErrorEvent: e,
       fromSide: SysPropsMessage.FROM_UNKNOWN
     };
