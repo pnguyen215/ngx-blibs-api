@@ -1,6 +1,26 @@
 {
-  "name": "ngx-blibs-api",
-  "version": "1.0.13",
+  "name": "ngx-api-sdk",
+  "version": "1.0.14",
+  "description": "A fantastic Angular library for HTTP method",
+  "main": "dist/@ngx-props-api/api-sdk/bundles/ngx-api-sdk.umd.js",
+  "module": "dist/@ngx-props-api/api-sdk/fesm2015/ngx-api-sdk.js",
+  "es2015": "dist/@ngx-props-api/api-sdk/esm2015/ngx-api-sdk.js",
+  "fesm2015": "dist/@ngx-props-api/api-sdk/fesm2015/ngx-api-sdk.js.map",
+  "typings": "dist/@ngx-props-api/api-sdk/ngx-api-sdk.d.ts",
+  "keywords": [
+    "angular",
+    "library",
+    "http",
+    "curd",
+    "request",
+    "api"
+  ],
+  "author": "Aris Nguyen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pnguyen215/ngx-blibs-api.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -13,7 +33,7 @@
     "build:ngx_api_sdk:lib": "ng-packagr -p projects/ngx-props-api/package.json",
     "package:ngx_api_sdk:lib": "npm run build:ngx_api_sdk:lib && cd dist/@ngx-props-api/api-sdk && npm link && npm pack"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^8.2.14",
     "@angular/common": "^8.2.14",
@@ -27,6 +47,15 @@
     "rxjs": "~6.4.0",
     "tslib": "^1.14.1",
     "zone.js": "~0.9.1"
+  },
+  "peerDependencies": {
+    "@angular/common": "^8.2.0",
+    "@angular/core": "^8.2.0",
+    "@angular/compiler": "^8.2.14",
+    "@angular/animations": "^8.2.14",
+    "@angular/forms": "^8.2.14",
+    "@angular/platform-browser": "^8.2.14",
+    "@angular/platform-browser-dynamic": "^8.2.14"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.802.2",

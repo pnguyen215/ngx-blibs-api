@@ -1,27 +1,59 @@
-# Ngx-Blibs-Api
+# Ngx-Api-Sdk
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.2.
+Ngx-API-SDK is an Angular package that provides support for handling HTTP requests. It offers user-friendly tools to make HTTP requests and process API responses.
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Use npm to install the Ngx-API-SDK package:
 
-## Code scaffolding
+```bash
+npm install ngx-api-sdk --force
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Usage
 
-## Build
+Import the Ngx-API-SDK package into your AppModule:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```ts
+import { NgxApiSdkModule } from "ngx-api-sdk";
 
-## Running unit tests
+@NgModule({
+  imports: [
+    NgxApiSdkModule.forRoot({
+      apiUrl: "https://api.example.com", // Replace with your API URL
+    }),
+  ],
+  // ...
+})
+export class AppModule {}
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```ts
+import { Component, OnInit } from "@angular/core";
+import { ApiService } from "ngx-api-sdk";
 
-## Running end-to-end tests
+@Component({
+  selector: "app-my-component",
+  templateUrl: "./my-component.component.html",
+  styleUrls: ["./my-component.component.css"],
+})
+export class MyComponent implements OnInit {
+  constructor(private apiService: ApiService) {}
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+  ngOnInit(): void {
+    // Send a GET request to the API
+    this.apiService.get("/users").subscribe(
+      (response) => {
+        console.log("Data from API:", response);
+      },
+      (error) => {
+        console.error("Error sending request:", error);
+      }
+    );
+  }
+}
+```
 
-## Further help
+## Configuration
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Before using the Ngx-API-SDK package, you need to configure your API URL in the AppModule as shown in the above instructions. You can also modify other configuration options such as timeout, headers, etc.
